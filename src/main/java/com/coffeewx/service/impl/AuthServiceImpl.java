@@ -1,6 +1,7 @@
 package com.coffeewx.service.impl;
 
 import cn.hutool.crypto.SecureUtil;
+import com.coffeewx.core.ResultCode;
 import com.coffeewx.core.ServiceException;
 import com.coffeewx.dao.UserMapper;
 import com.coffeewx.model.User;
@@ -8,7 +9,9 @@ import com.coffeewx.model.vo.UserInfoVO;
 import com.coffeewx.model.vo.UserReqVO;
 import com.coffeewx.service.AuthService;
 import com.coffeewx.service.TokenService;
+import com.coffeewx.service.UserService;
 import com.google.common.collect.Lists;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,16 +25,14 @@ import java.util.List;
 public class AuthServiceImpl implements AuthService{
 
     @Autowired
-    UserMapper userMapper;
+    UserService userService;
 
     @Autowired
     TokenService tokenService;
 
     @Override
     public String login(UserReqVO userReqVO) {
-        User userTpl = new User();
-        userTpl.setUsername( userReqVO.getUsername() );
-        User user = userMapper.getUserByUserName( userTpl );
+        User user = userService.findBy( "username",userReqVO.getUsername());
         if(user == null){
             throw new ServiceException( "用户未注册" );
         }
@@ -44,7 +45,10 @@ public class AuthServiceImpl implements AuthService{
     @Override
     public UserInfoVO getUserInfo(String token) {
         String userId = tokenService.getUserIdByToken( token );
-        User user = userMapper.selectByPrimaryKey( Integer.parseInt( userId ) );
+        if(StringUtils.isBlank( userId )){
+            throw new ServiceException( ResultCode.UNAUTHORIZED.getDesc() );
+        }
+        User user = userService.findById( Integer.parseInt( userId ) );
         if(user == null){
             throw new ServiceException( "用户不存在" );
         }

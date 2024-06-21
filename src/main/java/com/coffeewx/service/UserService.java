@@ -4,9 +4,8 @@ import com.coffeewx.core.Service;
 
 
 /**
- * Created by CodeGenerator on 2019/01/10.
+ * Created by CodeGenerator on 2019/01/16.
  */
 public interface UserService extends Service<User> {
-
 
 }

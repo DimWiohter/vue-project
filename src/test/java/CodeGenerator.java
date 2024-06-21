@@ -36,7 +36,7 @@ public class CodeGenerator {
     private static final String AUTHOR = "CodeGenerator";//@author
     private static final String DATE = new SimpleDateFormat("yyyy/MM/dd").format(new Date());//@date
 
-    private static final boolean isRestful = true;
+    private static final boolean isRestful = false;
 
     public static void main(String[] args) {
         genCodeByCustomModelName("sys_user","User");
