@@ -38,8 +38,12 @@ public class CodeGenerator {
 
     private static final boolean isRestful = false;
 
+    //重要提醒，生成完代码，一定要注释掉，防止误操作，重复生成
     public static void main(String[] args) {
-        genCodeByCustomModelName("sys_user","User");
+        //genCodeByCustomModelName("t_wx_receive_text","WxReceiveText");
+        //genCodeByCustomModelName("t_wx_subscribe_text","WxSubscribeText");
+        //genCodeByCustomModelName("t_wx_menu","WxMenu");
+        //genCodeByCustomModelName("t_wx_text_template","WxTextTemplate");
         //genCode("t_article_photo","ArticlePhoto");
         //genCode("t_photo","Photo");
         //genCode("t_account_fans","AccountFans");
