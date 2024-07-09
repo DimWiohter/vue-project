@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coffeewx.dao.WxTextTemplateMapper">
+    <resultMap id="BaseResultMap" type="com.coffeewx.model.WxTextTemplate">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="tpl_name" jdbcType="VARCHAR" property="tplName"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="wx_account_id" jdbcType="VARCHAR" property="wxAccountId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="is_related_subscribe_text" jdbcType="VARCHAR" property="isRelatedSubscribeText"/>
+        <result column="is_related_receive_text" jdbcType="VARCHAR" property="isRelatedReceiveText"/>
+        <result column="is_related_menu" jdbcType="VARCHAR" property="isRelatedMenu"/>
+    </resultMap>
+
+    <select id="findList" parameterType="com.coffeewx.model.WxTextTemplate" resultMap="BaseResultMap">
+        SELECT
+        t.*, (
+        CASE
+        WHEN (
+        SELECT
+        COUNT(t2.id)
+        FROM
+        t_wx_receive_text t2
+        WHERE
+        t2.tpl_id = t.id
+        ) THEN
+        '1'
+        ELSE
+        '0'
+        END
+        ) AS is_related_receive_text,
+        (
+        CASE
+        WHEN (
+        SELECT
+        COUNT(t3.id)
+        FROM
+        t_wx_subscribe_text t3
+        WHERE
+        t3.tpl_id = t.id
+        ) THEN
+        '1'
+        ELSE
+        '0'
+        END
+        ) AS is_related_subscribe_text,
+        (
+        CASE
+        WHEN (
+        SELECT
+        COUNT(t4.id)
+        FROM
+        t_wx_menu t4
+        WHERE
+        t4.tpl_id = t.id
+        ) THEN
+        '1'
+        ELSE
+        '0'
+        END
+        ) AS is_related_menu
+        FROM
+        t_wx_text_template t
+        WHERE 1=1
+        <if test="tplName != null and tplName != ''">
+            AND t.tpl_name LIKE CONCAT('%', #{tplName}, '%')
+        </if>
+        ORDER BY t.update_time DESC
+    </select>
+
+</mapper>

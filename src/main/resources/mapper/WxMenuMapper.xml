@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coffeewx.dao.WxMenuMapper">
+  <resultMap id="BaseResultMap" type="com.coffeewx.model.WxMenu">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+    <result column="menu_name" jdbcType="VARCHAR" property="menuName" />
+    <result column="menu_type" jdbcType="VARCHAR" property="menuType" />
+    <result column="menu_level" jdbcType="VARCHAR" property="menuLevel" />
+    <result column="tpl_id" jdbcType="VARCHAR" property="tplId" />
+    <result column="menu_url" jdbcType="VARCHAR" property="menuUrl" />
+    <result column="menu_sort" jdbcType="VARCHAR" property="menuSort" />
+    <result column="wx_account_id" jdbcType="VARCHAR" property="wxAccountId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="tpl_name" jdbcType="VARCHAR" property="tplName" />
+    <result column="wx_account_name" jdbcType="VARCHAR" property="wxAccountName" />
+  </resultMap>
+
+  <select id="findList" parameterType="com.coffeewx.model.WxMenu" resultMap="BaseResultMap">
+    SELECT * FROM t_wx_menu t
+    WHERE 1=1
+      <if test="parentId != null and parentId != ''">
+          AND t.parent_id = #{parentId}
+      </if>
+      <if test="wxAccountId != null and wxAccountId != ''">
+          AND t.wx_account_id = #{wxAccountId}
+      </if>
+      <if test="menuLevel != null and menuLevel != ''">
+          AND t.menu_level = #{menuLevel}
+      </if>
+  </select>
+
+  <select id="listTreeMenu" parameterType="com.coffeewx.model.WxMenu" resultMap="BaseResultMap">
+    SELECT
+        t.*, t2.`name` AS wx_account_name,
+        t3.tpl_name
+    FROM
+        t_wx_menu t
+    LEFT JOIN t_wx_account t2 ON t.wx_account_id = t2.id
+    LEFT JOIN t_wx_text_template t3 ON t.tpl_id = t3.id
+    WHERE
+        1 = 1
+      <if test="wxAccountId != null and wxAccountId != ''">
+          AND t.wx_account_id = #{wxAccountId}
+      </if>
+    ORDER BY
+        t.wx_account_id
+  </select>
+
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coffeewx.dao.WxAccountFansMapper">
+  <resultMap id="BaseResultMap" type="com.coffeewx.model.WxAccountFans">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="openid" jdbcType="VARCHAR" property="openid" />
+    <result column="subscribe_status" jdbcType="CHAR" property="subscribeStatus" />
+    <result column="subscribe_time" jdbcType="TIMESTAMP" property="subscribeTime" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="language" jdbcType="VARCHAR" property="language" />
+    <result column="country" jdbcType="VARCHAR" property="country" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="headimg_url" jdbcType="VARCHAR" property="headimgUrl" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="wx_account_id" jdbcType="VARCHAR" property="wxAccountId" />
+    <result column="wx_account_appid" jdbcType="VARCHAR" property="wxAccountAppid" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="nickname" jdbcType="VARBINARY" property="nickname" />
+    <result column="wx_account_name" jdbcType="VARCHAR" property="wxAccountName" />
+  </resultMap>
+
+  <select id="findList" parameterType="com.coffeewx.model.WxAccountFans" resultMap="BaseResultMap">
+    SELECT t.*, t2.`name` AS wx_account_name FROM t_wx_account_fans t
+    LEFT JOIN t_wx_account t2 on t.wx_account_id = t2.id
+    WHERE 1=1
+    <if test="gender != null and gender != ''">
+      AND t.gender = #{gender}
+    </if>
+    <if test="nicknameStr != null and nicknameStr != ''">
+      AND t.nickname LIKE CONCAT('%', #{nicknameStr}, '%')
+    </if>
+    <if test="wxAccountId != null and wxAccountId != ''">
+      AND t.wx_account_id = #{wxAccountId}
+    </if>
+    ORDER BY t.update_time DESC
+  </select>
+
+</mapper>
