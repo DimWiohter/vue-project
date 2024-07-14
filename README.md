@@ -13,7 +13,7 @@ CoffeeWx是一款基于VUE、Spring Boot的前后端分离的微信公众号管�
 
 # 项目地址
   - 前端项目地址：[coffeewx-web-ui](https://gitee.com/skysong/coffeewx-web-ui)
-  - 后盾项目地址：[coffeewx-admin-api](https://gitee.com/skysong/coffeewx-admin-api)
+  - 后端项目地址：[coffeewx-admin-api](https://gitee.com/skysong/coffeewx-admin-api)
 
 # 功能
 #### 系统管理
@@ -26,7 +26,17 @@ CoffeeWx是一款基于VUE、Spring Boot的前后端分离的微信公众号管�
   - 文本管理
 
 # 功能截图
+![账号管理](https://images.gitee.com/uploads/images/2019/0123/164503_2f3bbb5a_1019464.png "1.png")
 
+![欢迎语管理](https://images.gitee.com/uploads/images/2019/0123/164543_21a4e680_1019464.png "2.png")
+
+![关键字管理](https://images.gitee.com/uploads/images/2019/0123/164605_e1da1294_1019464.png "3.png")
+
+![粉丝管理](https://images.gitee.com/uploads/images/2019/0123/164623_4667fdc5_1019464.png "4.png")
+
+![菜单管理](https://images.gitee.com/uploads/images/2019/0123/164643_cf2360fc_1019464.png "5.png")
+
+![文本管理](https://images.gitee.com/uploads/images/2019/0123/164700_b07d8a2d_1019464.png "6.png")
 
 # Development
 ```sh
