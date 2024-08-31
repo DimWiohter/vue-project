@@ -51,7 +51,7 @@ public class WxMpConfig {
 
     private static WxMpMessageRouter newRouter(WxMpService wxMpService) {
         final WxMpMessageRouter newRouter = new WxMpMessageRouter(wxMpService);
-
+        Assert.notNull( SpringContextUtil.getBean( LogHandler.class ),"LogHandler" );
         // 记录所有事件的日志 （异步执行）
         newRouter.rule().handler( SpringContextUtil.getBean( LogHandler.class )).next();
 

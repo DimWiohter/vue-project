@@ -41,7 +41,7 @@ public class WxConfig implements InitializingBean {
      */
     public void initWxConfig(){
         List<WxAccount> wxAccountList = wxAccountService.findAll();
-        Assert.notNull( wxAccountService,"wxAccountService" );
+
         WxMpProperties wxMpProperties = WxMpProperties.getInstance();
         for (int i = 0; i < wxAccountList.size(); i++) {
             WxAccount wxAccount = wxAccountList.get( i );
