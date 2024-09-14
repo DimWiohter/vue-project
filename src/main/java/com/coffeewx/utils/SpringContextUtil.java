@@ -1,9 +1,13 @@
 package com.coffeewx.utils;
 
+import com.coffeewx.wxmp.config.WxConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 /**
  * @author Kevin
@@ -11,6 +15,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SpringContextUtil implements ApplicationContextAware {
+
+    private final static Logger logger = LoggerFactory.getLogger(SpringContextUtil.class);
 
     private static ApplicationContext applicationContext;
 
@@ -34,11 +40,13 @@ public class SpringContextUtil implements ApplicationContextAware {
 
     //通过class获取Bean.
     public static <T> T getBean(Class<T> clazz){
-        System.out.println(getApplicationContext());
+        logger.info( "1231236666" );
+        logger.info( getApplicationContext().getApplicationName() );
         System.out.println(123123);
-        System.out.println(123123);
-        System.out.println(getApplicationContext().getBean(clazz));
-        System.out.println(123123);
+        logger.info( "111111" );
+        Assert.notNull( getApplicationContext().getBean(clazz),"12312311111111111111" );
+        logger.info( "234234" );
+        Assert.isNull( getApplicationContext().getBean(clazz),"1231231133333333331111" );
         return getApplicationContext().getBean(clazz);
     }
 
