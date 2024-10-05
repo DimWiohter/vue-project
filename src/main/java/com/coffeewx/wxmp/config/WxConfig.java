@@ -19,6 +19,7 @@ import java.util.List;
  * @date 2019-01-16 14:39
  */
 @Component
+@Order(2)
 public class WxConfig implements InitializingBean {
 
     private final static Logger logger = LoggerFactory.getLogger(WxConfig.class);
