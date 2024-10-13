@@ -15,7 +15,6 @@ import org.springframework.util.Assert;
  * @date 2019-01-22 19:00
  */
 @Component
-@Order(1)
 public class SpringContextUtil implements ApplicationContextAware {
 
     private final static Logger logger = LoggerFactory.getLogger(SpringContextUtil.class);
