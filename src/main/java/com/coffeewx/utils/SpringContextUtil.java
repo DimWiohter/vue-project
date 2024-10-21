@@ -41,16 +41,16 @@ public class SpringContextUtil implements ApplicationContextAware {
 
     //通过class获取Bean.
     public static <T> T getBean(Class<T> clazz){
-        logger.info( "1231236666" );
-        Assert.notNull( getApplicationContext(),"12312311111111111111" );
-        logger.info( "1111111111111111111111" );
-        Assert.notNull( getApplicationContext(),"12312311111111111111" );
-        logger.info( getApplicationContext().getApplicationName() );
-        System.out.println(123123);
-        logger.info( "111111" );
-        Assert.notNull( getApplicationContext().getBean(clazz),"12312311111111111111" );
-        logger.info( "234234" );
-        Assert.isNull( getApplicationContext().getBean(clazz),"1231231133333333331111" );
+//        logger.info( "1231236666" );
+//        Assert.notNull( getApplicationContext(),"12312311111111111111" );
+//        logger.info( "1111111111111111111111" );
+//        Assert.notNull( getApplicationContext(),"12312311111111111111" );
+//        logger.info( getApplicationContext().getApplicationName() );
+//        System.out.println(123123);
+//        logger.info( "111111" );
+//        Assert.notNull( getApplicationContext().getBean(clazz),"12312311111111111111" );
+//        logger.info( "234234" );
+//        //Assert.isNull( getApplicationContext().getBean(clazz),"1231231133333333331111" );
         return getApplicationContext().getBean(clazz);
     }
 
