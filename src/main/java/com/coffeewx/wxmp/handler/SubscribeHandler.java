@@ -2,9 +2,7 @@ package com.coffeewx.wxmp.handler;
 
 import com.alibaba.fastjson.JSON;
 import com.coffeewx.model.WxAccount;
-import com.coffeewx.model.WxReceiveText;
 import com.coffeewx.model.WxSubscribeText;
-import com.coffeewx.model.WxTextTemplate;
 import com.coffeewx.service.WxAccountService;
 import com.coffeewx.service.WxReceiveTextService;
 import com.coffeewx.service.WxSubscribeTextService;
@@ -19,7 +17,6 @@ import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Map;
 
 /**

@@ -2,6 +2,7 @@ package com.coffeewx.wxmp.config;
 
 import com.google.common.collect.Lists;
 import lombok.Data;
+
 import java.util.List;
 
 @Data

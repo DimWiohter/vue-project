@@ -1,6 +1,5 @@
 package com.coffeewx.wxmp.config;
 
-import com.alibaba.fastjson.JSON;
 import com.coffeewx.model.WxAccount;
 import com.coffeewx.service.WxAccountService;
 import org.slf4j.Logger;
@@ -8,9 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
 
 import java.util.List;
 
@@ -42,7 +39,6 @@ public class WxConfig implements InitializingBean {
      */
     public void initWxConfig(){
         List<WxAccount> wxAccountList = wxAccountService.findAll();
-
         WxMpProperties wxMpProperties = WxMpProperties.getInstance();
         for (int i = 0; i < wxAccountList.size(); i++) {
             WxAccount wxAccount = wxAccountList.get( i );

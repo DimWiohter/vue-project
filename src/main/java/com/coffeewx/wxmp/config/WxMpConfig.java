@@ -9,7 +9,6 @@ import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
 import me.chanjar.weixin.mp.constant.WxMpEventConstants;
-import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.Map;
@@ -51,7 +50,6 @@ public class WxMpConfig {
 
     private static WxMpMessageRouter newRouter(WxMpService wxMpService) {
         final WxMpMessageRouter newRouter = new WxMpMessageRouter(wxMpService);
-        Assert.notNull( SpringContextUtil.getBean( LogHandler.class ),"LogHandler" );
         // 记录所有事件的日志 （异步执行）
         newRouter.rule().handler( SpringContextUtil.getBean( LogHandler.class )).next();
 

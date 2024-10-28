@@ -8,15 +8,12 @@ import com.coffeewx.service.WxAccountService;
 import com.coffeewx.service.WxReceiveTextService;
 import com.coffeewx.service.WxTextTemplateService;
 import com.coffeewx.wxmp.builder.TextBuilder;
-import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import tk.mybatis.mapper.entity.Condition;
 
 import java.util.List;
 import java.util.Map;
