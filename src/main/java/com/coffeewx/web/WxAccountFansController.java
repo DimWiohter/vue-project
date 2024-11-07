@@ -135,6 +135,7 @@ public class WxAccountFansController extends AbstractController{
             }
         } catch (WxErrorException e) {
             e.printStackTrace();
+            return ResultGenerator.genFailResult( e.getMessage() );
         }
         return ResultGenerator.genSuccessResult();
     }
