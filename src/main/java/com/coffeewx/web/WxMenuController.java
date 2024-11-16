@@ -191,6 +191,7 @@ public class WxMenuController {
 
         } catch (WxErrorException e) {
             e.printStackTrace();
+            return ResultGenerator.genFailResult( e.getMessage() );
         }
 
         return ResultGenerator.genSuccessResult();

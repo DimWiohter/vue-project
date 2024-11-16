@@ -72,18 +72,24 @@ public class SubscribeHandler extends AbstractHandler {
 
         try {
             String content = "感谢关注！";//默认
-            WxAccount wxAccount = wxAccountService.findBy( "account",wxMessage.getToUser());
-            if(wxAccount != null){
-                WxSubscribeText wxSubscribeText = wxSubscribeTextService.findBy( "wxAccountId", String.valueOf( wxAccount.getId() ));
-                if(wxSubscribeText != null){
-                    content = wxSubscribeText.getTplContent();
-                }
-            }
-            logger.info( "wxMessage : {}", JSON.toJSONString(wxMessage) );
             return new TextBuilder().build(content, wxMessage, weixinService);
         } catch (Exception e) {
             this.logger.error(e.getMessage(), e);
         }
+//        try {
+//            String content = "感谢关注！";//默认
+//            WxAccount wxAccount = wxAccountService.findBy( "account",wxMessage.getToUser());
+//            if(wxAccount != null){
+//                WxSubscribeText wxSubscribeText = wxSubscribeTextService.findBy( "wxAccountId", String.valueOf( wxAccount.getId() ));
+//                if(wxSubscribeText != null){
+//                    content = wxSubscribeText.getTplContent();
+//                }
+//            }
+//            logger.info( "wxMessage : {}", JSON.toJSONString(wxMessage) );
+//            return new TextBuilder().build(content, wxMessage, weixinService);
+//        } catch (Exception e) {
+//            this.logger.error(e.getMessage(), e);
+//        }
 
         return null;
     }
