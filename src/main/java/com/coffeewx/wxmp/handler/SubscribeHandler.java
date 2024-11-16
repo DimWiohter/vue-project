@@ -3,6 +3,7 @@ package com.coffeewx.wxmp.handler;
 import com.alibaba.fastjson.JSON;
 import com.coffeewx.model.WxAccount;
 import com.coffeewx.model.WxSubscribeText;
+import com.coffeewx.model.WxTextTemplate;
 import com.coffeewx.service.WxAccountService;
 import com.coffeewx.service.WxReceiveTextService;
 import com.coffeewx.service.WxSubscribeTextService;
@@ -72,24 +73,21 @@ public class SubscribeHandler extends AbstractHandler {
 
         try {
             String content = "感谢关注！";//默认
+            WxAccount wxAccount = wxAccountService.findBy( "account",wxMessage.getToUser());
+            if(wxAccount != null){
+                WxSubscribeText wxSubscribeText = wxSubscribeTextService.findBy( "wxAccountId", String.valueOf( wxAccount.getId() ));
+                if(wxSubscribeText != null){
+                    WxTextTemplate wxTextTemplate = wxTextTemplateService.findById( Integer.parseInt( wxSubscribeText.getTplId() ) );
+                    if(wxTextTemplate != null){
+                        content = wxTextTemplate.getContent();
+                    }
+                }
+            }
+            logger.info( "wxMessage : {}", JSON.toJSONString(wxMessage) );
             return new TextBuilder().build(content, wxMessage, weixinService);
         } catch (Exception e) {
             this.logger.error(e.getMessage(), e);
         }
-//        try {
-//            String content = "感谢关注！";//默认
-//            WxAccount wxAccount = wxAccountService.findBy( "account",wxMessage.getToUser());
-//            if(wxAccount != null){
-//                WxSubscribeText wxSubscribeText = wxSubscribeTextService.findBy( "wxAccountId", String.valueOf( wxAccount.getId() ));
-//                if(wxSubscribeText != null){
-//                    content = wxSubscribeText.getTplContent();
-//                }
-//            }
-//            logger.info( "wxMessage : {}", JSON.toJSONString(wxMessage) );
-//            return new TextBuilder().build(content, wxMessage, weixinService);
-//        } catch (Exception e) {
-//            this.logger.error(e.getMessage(), e);
-//        }
 
         return null;
     }
