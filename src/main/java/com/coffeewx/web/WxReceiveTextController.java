@@ -59,8 +59,8 @@ public class WxReceiveTextController {
     }
 
     @PostMapping("/list")
-    public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size,@RequestParam String receiveText,@RequestParam String wxAccountId) {
-        PageHelper.startPage(page, size);
+    public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer limit,@RequestParam String receiveText,@RequestParam String wxAccountId) {
+        PageHelper.startPage(page, limit);
         WxReceiveText wxReceiveText = new WxReceiveText();
         wxReceiveText.setReceiveText( receiveText );
         wxReceiveText.setWxAccountId( wxAccountId );

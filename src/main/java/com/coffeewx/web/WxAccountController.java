@@ -102,8 +102,8 @@ public class WxAccountController extends AbstractController{
     }
 
     @PostMapping("/list")
-    public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size,@RequestParam String name) {
-        PageHelper.startPage(page, size);
+    public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer limit,@RequestParam String name) {
+        PageHelper.startPage(page, limit);
         WxAccount wxAccount = new WxAccount();
         wxAccount.setName( name );
         List<WxAccount> list = wxAccountService.findList(wxAccount);

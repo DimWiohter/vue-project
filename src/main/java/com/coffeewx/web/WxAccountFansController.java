@@ -62,8 +62,8 @@ public class WxAccountFansController extends AbstractController{
     }
 
     @PostMapping("/list")
-    public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size,@RequestParam String nicknameStr,@RequestParam String wxAccountId) {
-        PageHelper.startPage(page, size);
+    public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer limit,@RequestParam String nicknameStr,@RequestParam String wxAccountId) {
+        PageHelper.startPage(page, limit);
         WxAccountFans wxAccountFans = new WxAccountFans();
         wxAccountFans.setNicknameStr( nicknameStr );
         wxAccountFans.setWxAccountId( wxAccountId );

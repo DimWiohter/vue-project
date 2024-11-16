@@ -56,8 +56,8 @@ public class WxSubscribeTextController {
     }
 
     @PostMapping("/list")
-    public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {
-        PageHelper.startPage(page, size);
+    public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer limit) {
+        PageHelper.startPage(page, limit);
         WxSubscribeText wxSubscribeText = new WxSubscribeText();
         List<WxSubscribeText> list = wxSubscribeTextService.findList( wxSubscribeText );
         PageInfo pageInfo = new PageInfo(list);

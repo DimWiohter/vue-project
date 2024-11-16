@@ -51,8 +51,8 @@ public class WxTextTemplateController {
     }
 
     @PostMapping("/list")
-    public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size,@RequestParam String tplName) {
-        PageHelper.startPage(page, size);
+    public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer limit,@RequestParam String tplName) {
+        PageHelper.startPage(page, limit);
         WxTextTemplate wxTextTemplate = new WxTextTemplate();
         wxTextTemplate.setTplName( tplName );
         List<WxTextTemplate> list = wxTextTemplateService.findList( wxTextTemplate );
