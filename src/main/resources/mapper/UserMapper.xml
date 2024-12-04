@@ -28,5 +28,11 @@
     where username = #{username,jdbcType=VARCHAR}
   </select>
 
-
+  <select id="findList" parameterType="com.coffeewx.model.User" resultMap="BaseResultMap">
+    SELECT * FROM sys_user t
+    WHERE 1=1
+    <if test="username != null and username != ''">
+      AND t.username LIKE CONCAT('%', #{username}, '%')
+    </if>
+  </select>
 </mapper>

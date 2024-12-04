@@ -1,6 +1,7 @@
 package com.coffeewx.service.impl;
 
 import cn.hutool.crypto.SecureUtil;
+import com.coffeewx.core.ProjectConstant;
 import com.coffeewx.core.ResultCode;
 import com.coffeewx.core.ServiceException;
 import com.coffeewx.dao.UserMapper;
@@ -36,6 +37,9 @@ public class AuthServiceImpl implements AuthService{
         if(user == null){
             throw new ServiceException( "用户未注册" );
         }
+        if(user.getFlag().equals( ProjectConstant.NO )){
+            throw new ServiceException( "用户已停用" );
+        }
         if(!user.getPwd().equals( SecureUtil.md5( userReqVO.getPassword() ) )){
             throw new ServiceException( "用户名或密码不正确" );
         }
@@ -58,7 +62,12 @@ public class AuthServiceImpl implements AuthService{
         userInfoVO.setIntroduction( user.getNickName() );
         userInfoVO.setName( user.getUsername() );
         List<String> roles = Lists.newArrayList();
-        roles.add("admin");
+        if(user.getUsername().equals( ProjectConstant.RoleConstant.ADMIN )){
+            roles.add(ProjectConstant.RoleConstant.ADMIN);
+        }else{
+            roles.add(ProjectConstant.RoleConstant.EDITOR );
+        }
+
         userInfoVO.setRoles( roles );
         return userInfoVO;
     }

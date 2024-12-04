@@ -19,10 +19,12 @@ public final class ProjectConstant {
     public static final String USER_TOKEN_PREFIX = "user_token_";
     public static final int USER_TOKEN_EXPIRE = 1 * 24 * 3600;//1天
     //public static final int USER_TOKEN_EXPIRE = 60;//1天
-    //默认用户
-    public static final String userId = "admin";
-    public static final String userName = "admin";
-    public static final String userPassword = "admin";
 
+    public class RoleConstant{
+        public static final String ADMIN = "admin";
+        public static final String EDITOR = "editor";
+    }
 
+    public static final String YES = "1";
+    public static final String NO = "0";
 }
