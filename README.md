@@ -32,17 +32,21 @@ http://{域名}/api/wx/portal/{appid}
   - 文本管理
 
 # 功能截图
-![账号管理](https://images.gitee.com/uploads/images/2019/0123/164503_2f3bbb5a_1019464.png "1.png")
 
-![欢迎语管理](https://images.gitee.com/uploads/images/2019/0123/164543_21a4e680_1019464.png "2.png")
+![账号管理](https://images.gitee.com/uploads/images/2019/0226/153816_0e2f97e9_1019464.png "1_看图王.png")
 
-![关键字管理](https://images.gitee.com/uploads/images/2019/0123/164605_e1da1294_1019464.png "3.png")
+![欢迎语管理](https://images.gitee.com/uploads/images/2019/0226/153838_44bc1d12_1019464.png "2_看图王.png")
 
-![粉丝管理](https://images.gitee.com/uploads/images/2019/0123/164623_4667fdc5_1019464.png "4.png")
+![关键字管理](https://images.gitee.com/uploads/images/2019/0226/153845_15ab4bc1_1019464.png "3_看图王.png")
 
-![菜单管理](https://images.gitee.com/uploads/images/2019/0123/164643_cf2360fc_1019464.png "5.png")
+![粉丝管理](https://images.gitee.com/uploads/images/2019/0226/153854_9418c515_1019464.png "4_看图王.png")
 
-![文本管理](https://images.gitee.com/uploads/images/2019/0123/164700_b07d8a2d_1019464.png "6.png")
+![菜单管理](https://images.gitee.com/uploads/images/2019/0226/153902_6bae1639_1019464.png "5_看图王.png")
+
+![文本管理](https://images.gitee.com/uploads/images/2019/0226/153910_81ddfda9_1019464.png "6_看图王.png")
+
+![用户管理](https://images.gitee.com/uploads/images/2019/0226/153916_2a0b732e_1019464.png "7_看图王.png")
+
 
 # Development
 ```sh
