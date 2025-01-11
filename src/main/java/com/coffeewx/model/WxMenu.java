@@ -30,7 +30,7 @@ public class WxMenu {
     private String menuName;
 
     /**
-     * 菜单类型 1文本消息；2图文消息；3网址链接
+     * 菜单类型 1文本消息；2图文消息；3网址链接;4小程序
      */
     @Column(name = "menu_type")
     private String menuType;
@@ -62,6 +62,12 @@ public class WxMenu {
      */
     @Column(name = "wx_account_id")
     private String wxAccountId;
+
+    @Column(name = "miniprogram_appid")
+    private String miniprogramAppid;
+
+    @Column(name = "miniprogram_pagepath")
+    private String miniprogramPagepath;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss",iso= DateTimeFormat.ISO.DATE_TIME)

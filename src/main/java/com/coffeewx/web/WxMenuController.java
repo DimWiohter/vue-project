@@ -159,6 +159,13 @@ public class WxMenuController {
                     wxMenuButton.setName( menuTreeNode.getMenuName() );
                     wxMenuButton.setUrl( menuTreeNode.getMenuUrl() );
                 }
+                if(menuTreeNode.getMenuType().equals( "4" )){
+                    wxMenuButton.setType( WxConsts.MenuButtonType.MINIPROGRAM);
+                    wxMenuButton.setName( menuTreeNode.getMenuName() );
+                    wxMenuButton.setUrl( menuTreeNode.getMenuUrl() );
+                    wxMenuButton.setAppId( menuTreeNode.getMiniprogramAppid() );
+                    wxMenuButton.setPagePath( menuTreeNode.getMiniprogramPagepath() );
+                }
 
                 if(menuTreeNode.getChildren().size() > 0){
                     for (int j = 0; j < menuTreeNode.getChildren().size(); j++) {
@@ -180,6 +187,13 @@ public class WxMenuController {
                             wxMenuButtonSub.setType( WxConsts.MenuButtonType.VIEW);
                             wxMenuButtonSub.setName( menuTreeNodeSub.getMenuName() );
                             wxMenuButtonSub.setUrl( menuTreeNodeSub.getMenuUrl() );
+                        }
+                        if(menuTreeNode.getMenuType().equals( "4" )){
+                            wxMenuButtonSub.setType( WxConsts.MenuButtonType.MINIPROGRAM);
+                            wxMenuButtonSub.setName( menuTreeNode.getMenuName() );
+                            wxMenuButtonSub.setUrl( menuTreeNode.getMenuUrl() );
+                            wxMenuButtonSub.setAppId( menuTreeNode.getMiniprogramAppid() );
+                            wxMenuButtonSub.setPagePath( menuTreeNode.getMiniprogramPagepath() );
                         }
                         wxMenuButton.getSubButtons().add( wxMenuButtonSub );
                     }

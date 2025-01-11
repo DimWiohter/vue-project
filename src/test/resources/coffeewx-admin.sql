@@ -96,6 +96,8 @@ CREATE TABLE `t_wx_menu` (
   `menu_url` varchar(255) DEFAULT NULL COMMENT '菜单URL',
   `menu_sort` varchar(32) DEFAULT NULL COMMENT '排序',
   `wx_account_id` varchar(32) DEFAULT NULL COMMENT '微信账号ID',
+  `miniprogram_appid` varchar(32) DEFAULT NULL COMMENT '小程序appid',
+  `miniprogram_pagepath` varchar(200) DEFAULT NULL COMMENT '小程序页面路径',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
