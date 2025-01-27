@@ -35,7 +35,7 @@ public class TokenAnnotationInterceptor extends HandlerInterceptorAdapter {
         if (handler instanceof HandlerMethod) {
             HandlerMethod handler2 = (HandlerMethod) handler;
             Method method = handler2.getMethod();
-            logger.info( "方法[" + method.getDeclaringClass().getSimpleName() + "." + method.getName() + "()]拦截开始！" );
+            logger.debug( "方法[" + method.getDeclaringClass().getSimpleName() + "." + method.getName() + "()]拦截开始！" );
             try {
                 Class <?> clazz = method.getDeclaringClass();
                 if (method.isAnnotationPresent( IgnoreToken.class )
@@ -54,7 +54,7 @@ public class TokenAnnotationInterceptor extends HandlerInterceptorAdapter {
                 logger.error( "拦截出错！", e );
                 throw new ServiceException( "拦截器异常！" );
             } finally {
-                logger.info( "方法[" + method.getDeclaringClass().getSimpleName() + "." + method.getName() + "()]拦截结束！" );
+                logger.debug( "方法[" + method.getDeclaringClass().getSimpleName() + "." + method.getName() + "()]拦截结束！" );
             }
         }
         return true;

@@ -44,7 +44,6 @@ public class AuthController extends AbstractController{
 
     @PostMapping("/getUserInfo")
     public Result getUserInfo(@RequestBody TokenReqVO tokenReqVO) {
-        System.out.println(tokenReqVO == null);
         if(StringUtils.isBlank( tokenReqVO.getToken() )){
             return ResultGenerator.genFailResult( "参数不全" );
         }

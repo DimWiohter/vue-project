@@ -40,6 +40,9 @@ public class CodeGenerator {
 
     //重要提醒，生成完代码，一定要注释掉，防止误操作，重复生成
     public static void main(String[] args) {
+        //genCodeByCustomModelName("t_wx_media_upload","WxMediaUpload");
+        //genCodeByCustomModelName("t_wx_news_template","WxNewsTemplate");
+        //genCodeByCustomModelName("t_wx_news_article_item","WxNewsArticleItem");
         //genCodeByCustomModelName("t_wx_receive_text","WxReceiveText");
         //genCodeByCustomModelName("t_wx_subscribe_text","WxSubscribeText");
         //genCodeByCustomModelName("t_wx_menu","WxMenu");

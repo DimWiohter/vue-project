@@ -17,6 +17,7 @@
         <!--本地包的引入-->
         <java.lib>${project.basedir}/lib</java.lib>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring.boot.version>1.5.13.RELEASE</spring.boot.version>
     </properties>
 
 
@@ -41,6 +42,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
         </dependency>
 
         <dependency>
@@ -158,11 +165,11 @@
         </dependency>
 
         <!-- pdf转成图片 -->
-        <dependency>
-            <groupId>org.apache.pdfbox</groupId>
-            <artifactId>pdfbox</artifactId>
-            <version>2.0.6</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.apache.pdfbox</groupId>-->
+            <!--<artifactId>pdfbox</artifactId>-->
+            <!--<version>2.0.6</version>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>com.github.binarywang</groupId>
@@ -181,11 +188,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
-            <scope>true</scope>
         </dependency>
 
     </dependencies>
 
+    <!--mvn clean package -Dmaven.test.skip=true -Pdev 表示打包开发环境-->
     <profiles>
         <!-- 开发环境 -->
         <profile>

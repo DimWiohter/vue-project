@@ -1,5 +1,7 @@
 package com.coffeewx.core;
 
+import cn.hutool.setting.dialect.Props;
+
 /**
  * 项目常量
  */
@@ -27,4 +29,7 @@ public final class ProjectConstant {
 
     public static final String YES = "1";
     public static final String NO = "0";
+
+    public static final Props props = new Props("application.properties");
+
 }

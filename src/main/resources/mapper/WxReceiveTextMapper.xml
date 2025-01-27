@@ -32,6 +32,7 @@
     <if test="wxAccountId != null and wxAccountId != ''">
       AND t.wx_account_id = #{wxAccountId}
     </if>
+    ORDER BY t.update_time DESC
   </select>
 
   <select id="findListByReceiveTest" parameterType="com.coffeewx.model.WxReceiveText" resultMap="BaseResultMap">

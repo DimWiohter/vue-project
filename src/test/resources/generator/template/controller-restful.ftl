@@ -16,7 +16,7 @@ import java.util.List;
 */
 @RestController
 @RequestMapping("${baseRequestMapping}")
-public class ${modelNameUpperCamel}Controller {
+public class ${modelNameUpperCamel}Controller extends AbstractController{
     @Resource
     private ${modelNameUpperCamel}Service ${modelNameLowerCamel}Service;
 

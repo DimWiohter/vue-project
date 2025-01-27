@@ -1,5 +1,6 @@
 package com.coffeewx.interceptor;
 
+import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -20,7 +21,7 @@ import java.util.Map;
  * @Author:Kevin
  * @Date:2018-12-07 15:09
  */
-@Profile({"dev", "test"})
+//@Profile({"dev", "test"})
 @Component
 @Aspect
 public class LogAspect {
@@ -52,15 +53,17 @@ public class LogAspect {
         HttpServletRequest request = attributes.getRequest();
 
         Map params = new LinkedHashMap( 10 );
-        params.put( "url", request.getRequestURL() ); // 获取请求的url
-        params.put( "method", request.getMethod() ); // 获取请求的方式
+        params.put( "uri", request.getRequestURI() ); // 获取请求的url
+        //params.put( "method", request.getMethod() ); // 获取请求的方式
         params.put( "args", joinPoint.getArgs() ); // 请求参数
-        params.put( "className", joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName() ); // 获取类名和获取类方法
+        //params.put( "className", joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName() ); // 获取类名和获取类方法
         params.put( "ip", request.getRemoteAddr() ); // 获取请求的ip地址
 
         // 输出格式化后的json字符串
         //logger.info( "params:{}", JSON.toJSONString( params ) );
-        logger.info( "params:{}", JSON.toJSONString( params.get( "args" ) ) );
+        //logger.info( "params:{}", JSON.toJSONString( params.get( "args" ) ) );
+        logger.info( "params:{}", JSONUtil.toJsonStr(params) );
+
     }
 
     /**
@@ -71,7 +74,9 @@ public class LogAspect {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
         // 会打印出一个对象，想打印出具体内容需要在定义模型处加上toString()
-        logger.info( "result:{}", object.toString() );
+        //logger.info( "result:{}", object.toString() );
+        logger.info( "result:{}", JSONUtil.toJsonStr(object) );
+        ;
     }
 
     /**

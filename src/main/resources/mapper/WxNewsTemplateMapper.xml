@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coffeewx.dao.WxNewsTemplateMapper">
+  <resultMap id="BaseResultMap" type="com.coffeewx.model.WxNewsTemplate">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="tpl_name" jdbcType="VARCHAR" property="tplName" />
+    <result column="is_upload" jdbcType="VARCHAR" property="isUpload" />
+    <result column="media_id" jdbcType="VARCHAR" property="mediaId" />
+    <result column="wx_account_id" jdbcType="VARCHAR" property="wxAccountId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="wx_account_name" jdbcType="VARCHAR" property="wxAccountName" />
+    <result column="count_article" jdbcType="VARCHAR" property="countArticle" />
+  </resultMap>
+
+  <select id="findList" parameterType="com.coffeewx.model.WxNewsTemplate" resultMap="BaseResultMap">
+    SELECT t.*, t2.`name` AS wx_account_name,(SELECT COUNT(1) from t_wx_news_article_item tt where tt.news_id = t.id) AS count_article FROM t_wx_news_template t
+    LEFT JOIN t_wx_account t2 on t.wx_account_id = t2.id
+    WHERE 1=1
+    <if test="wxAccountId != null and wxAccountId != ''">
+      AND t.wx_account_id = #{wxAccountId}
+    </if>
+    <if test="tplName != null and tplName != ''">
+      AND t.tpl_name LIKE CONCAT('%', #{tplName}, '%')
+    </if>
+    ORDER BY t.update_time DESC
+  </select>
+
+</mapper>
