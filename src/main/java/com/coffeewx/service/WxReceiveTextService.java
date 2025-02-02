@@ -12,4 +12,5 @@ public interface WxReceiveTextService extends Service<WxReceiveText> {
 
     List<WxReceiveText> findListByReceiveTest(WxReceiveText tWxReceiveText);
 
+
 }

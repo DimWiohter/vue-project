@@ -29,4 +29,5 @@ public class WxReceiveTextServiceImpl extends AbstractService<WxReceiveText> imp
         return tWxReceiveTextMapper.findListByReceiveTest(tWxReceiveText);
     }
 
+
 }
