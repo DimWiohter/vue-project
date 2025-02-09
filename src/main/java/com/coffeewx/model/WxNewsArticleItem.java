@@ -88,4 +88,10 @@ public class WxNewsArticleItem {
     @Column(name = "update_time")
     private Date updateTime;
 
+    @Column(name = "need_open_comment")
+    private String needOpenComment;
+
+    @Column(name = "only_fans_can_comment")
+    private String onlyFansCanComment;
+
 }

@@ -5,13 +5,11 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.coffeewx.core.Result;
 import com.coffeewx.core.ResultGenerator;
-import com.coffeewx.model.WxAccount;
-import com.coffeewx.model.WxAccountFans;
-import com.coffeewx.model.WxMenu;
-import com.coffeewx.model.WxTextTemplate;
+import com.coffeewx.model.*;
 import com.coffeewx.model.vo.MenuTreeNode;
 import com.coffeewx.service.WxAccountService;
 import com.coffeewx.service.WxMenuService;
+import com.coffeewx.service.WxNewsTemplateService;
 import com.coffeewx.service.WxTextTemplateService;
 import com.coffeewx.wxmp.config.WxMpConfig;
 import com.github.pagehelper.PageHelper;
@@ -44,6 +42,9 @@ public class WxMenuController {
 
     @Autowired
     private WxTextTemplateService wxTextTemplateService;
+
+    @Autowired
+    private WxNewsTemplateService wxNewsTemplateService;
 
     @PostMapping("/add")
     public Result add(@RequestBody WxMenu wxMenu) {
@@ -148,11 +149,17 @@ public class WxMenuController {
             for (int i = 0; i < menuTreeNodeList.size(); i++) {
                 MenuTreeNode menuTreeNode = menuTreeNodeList.get( i );
                 WxMenuButton wxMenuButton = new WxMenuButton();
-                if(menuTreeNode.getMenuType().equals( "1" ) || menuTreeNode.getMenuType().equals( "2" )){
+                if(menuTreeNode.getMenuType().equals( "1" )){
                     wxMenuButton.setType( WxConsts.MenuButtonType.CLICK);
                     wxMenuButton.setName( menuTreeNode.getMenuName() );
                     WxTextTemplate wxTextTemplate = wxTextTemplateService.findById( Integer.parseInt( menuTreeNode.getTplId() ) );
                     wxMenuButton.setKey( wxTextTemplate.getContent() );
+                }
+                if(menuTreeNode.getMenuType().equals( "2" )){
+                    wxMenuButton.setType( WxConsts.MenuButtonType.MEDIA_ID);
+                    wxMenuButton.setName( menuTreeNode.getMenuName() );
+                    WxNewsTemplate wxNewsTemplate = wxNewsTemplateService.findById( Integer.parseInt( menuTreeNode.getTplId() ) );
+                    wxMenuButton.setMediaId( wxNewsTemplate.getMediaId() );
                 }
                 if(menuTreeNode.getMenuType().equals( "3" )){
                     wxMenuButton.setType( WxConsts.MenuButtonType.VIEW);
@@ -178,10 +185,10 @@ public class WxMenuController {
                             wxMenuButtonSub.setKey( wxTextTemplateSub.getContent() );
                         }
                         if(menuTreeNodeSub.getMenuType().equals( "2" )){
-                            wxMenuButtonSub.setType( WxConsts.MenuButtonType.CLICK);
+                            wxMenuButtonSub.setType( WxConsts.MenuButtonType.MEDIA_ID);
                             wxMenuButtonSub.setName( menuTreeNodeSub.getMenuName() );
-                            WxTextTemplate wxTextTemplateSub = wxTextTemplateService.findById( Integer.parseInt( menuTreeNodeSub.getTplId() ) );
-                            wxMenuButtonSub.setKey( wxTextTemplateSub.getContent() );
+                            WxNewsTemplate wxNewsTemplate = wxNewsTemplateService.findById( Integer.parseInt( menuTreeNodeSub.getTplId() ) );
+                            wxMenuButtonSub.setMediaId( wxNewsTemplate.getMediaId() );
                         }
                         if(menuTreeNodeSub.getMenuType().equals( "3" )){
                             wxMenuButtonSub.setType( WxConsts.MenuButtonType.VIEW);

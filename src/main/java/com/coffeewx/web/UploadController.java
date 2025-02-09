@@ -26,6 +26,9 @@ import java.net.URLDecoder;
 @RestController
 public class UploadController extends AbstractController {
 
+    @Value("${upload.news.dir}")
+    private String uploadDirStr;
+
     @GetMapping("/qiniu/upload/token")
     public Result getToken() {
         String accessKey = "qi5Xf8wubUQ889lX0zdBSivfoCK_3dwvcJtz1cFd";
@@ -55,7 +58,6 @@ public class UploadController extends AbstractController {
         if ("GIF".equals( imgType.toUpperCase() ) || "PNG".equals( imgType.toUpperCase() ) || "JPG".equals( imgType.toUpperCase() )) {
             // 项目在容器中实际发布运行的根路径
             //String realPath = request.getSession().getServletContext().getRealPath( "/" );
-            String uploadDirStr = ProjectConstant.props.getStr( "upload.dir" );
 
             File uploadDir = new File(uploadDirStr);
             if (!uploadDir.exists()) {

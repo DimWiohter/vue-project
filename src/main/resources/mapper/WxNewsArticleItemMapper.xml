@@ -15,6 +15,8 @@
     <result column="content_source_url" jdbcType="VARCHAR" property="contentSourceUrl" />
     <result column="order_no" jdbcType="INTEGER" property="orderNo" />
     <result column="pic_path" jdbcType="VARCHAR" property="picPath" />
+    <result column="need_open_comment" jdbcType="VARCHAR" property="needOpenComment" />
+    <result column="only_fans_can_comment" jdbcType="VARCHAR" property="onlyFansCanComment" />
     <result column="news_id" jdbcType="VARCHAR" property="newsId" />
     <result column="wx_account_id" jdbcType="VARCHAR" property="wxAccountId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />

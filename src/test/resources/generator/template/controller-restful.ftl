@@ -47,7 +47,8 @@ public class ${modelNameUpperCamel}Controller extends AbstractController{
     @GetMapping
     public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer limit) {
         PageHelper.startPage(page, limit);
-        List<${modelNameUpperCamel}> list = ${modelNameLowerCamel}Service.findAll();
+        ${modelNameUpperCamel} ${modelNameLowerCamel} = new ${modelNameUpperCamel}();
+        List<${modelNameUpperCamel}> list = ${modelNameLowerCamel}Service.findList(${modelNameLowerCamel});
         PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genSuccessResult(pageInfo);
     }

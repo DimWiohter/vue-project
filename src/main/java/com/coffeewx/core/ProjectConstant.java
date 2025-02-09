@@ -22,6 +22,10 @@ public final class ProjectConstant {
     public static final int USER_TOKEN_EXPIRE = 1 * 24 * 3600;//1天
     //public static final int USER_TOKEN_EXPIRE = 60;//1天
 
+    public static final String CONTEXT_KEY_USER_ID = "currentUserId";
+    public static final String CONTEXT_KEY_USERNAME = "currentUserName";
+    public static final String CONTEXT_KEY_USER_TOKEN = "currentUserToken";
+
     public class RoleConstant{
         public static final String ADMIN = "admin";
         public static final String EDITOR = "editor";
@@ -29,7 +33,5 @@ public final class ProjectConstant {
 
     public static final String YES = "1";
     public static final String NO = "0";
-
-    public static final Props props = new Props("application.properties");
 
 }

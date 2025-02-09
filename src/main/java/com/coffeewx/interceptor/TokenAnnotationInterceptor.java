@@ -7,6 +7,7 @@ import com.coffeewx.core.ResultCode;
 import com.coffeewx.core.ServiceException;
 import com.coffeewx.core.redis.CacheService;
 import com.coffeewx.service.TokenService;
+import com.coffeewx.utils.BaseContextHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,8 @@ public class TokenAnnotationInterceptor extends HandlerInterceptorAdapter {
                     return false;
                 }
 
+                String userId = tokenService.getUserIdByToken( token );
+                BaseContextHandler.setUserID( userId );
                 logger.debug( "token: " + token );
             } catch (Exception e) {
                 logger.error( "拦截出错！", e );
@@ -70,6 +73,12 @@ public class TokenAnnotationInterceptor extends HandlerInterceptorAdapter {
         } catch (IOException ex) {
             logger.error( ex.getMessage() );
         }
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        BaseContextHandler.remove();
+        super.afterCompletion(request, response, handler, ex);
     }
 
 }

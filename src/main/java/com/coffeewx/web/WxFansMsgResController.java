@@ -1,8 +1,9 @@
-package ${basePackage}.web;
-import ${basePackage}.core.Result;
-import ${basePackage}.core.ResultGenerator;
-import ${basePackage}.model.${modelNameUpperCamel};
-import ${basePackage}.service.${modelNameUpperCamel}Service;
+package com.coffeewx.web;
+import com.coffeewx.core.Result;
+import com.coffeewx.core.ResultGenerator;
+import com.coffeewx.model.WxFansMsg;
+import com.coffeewx.model.WxFansMsgRes;
+import com.coffeewx.service.WxFansMsgResService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,43 +15,43 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 /**
-* Created by ${author} on ${date}.
+* Created by CodeGenerator on 2019/03/13.
 */
 @RestController
-@RequestMapping("${baseRequestMapping}")
-public class ${modelNameUpperCamel}Controller extends AbstractController{
+@RequestMapping("/wx/fans/msg/res")
+public class WxFansMsgResController extends AbstractController{
     @Autowired
-    private ${modelNameUpperCamel}Service ${modelNameLowerCamel}Service;
+    private WxFansMsgResService wxFansMsgResService;
 
     @PostMapping("/add")
-    public Result add(@RequestBody ${modelNameUpperCamel} ${modelNameLowerCamel}) {
-        ${modelNameLowerCamel}Service.save(${modelNameLowerCamel});
+    public Result add(@RequestBody WxFansMsgRes wxFansMsgRes) {
+        wxFansMsgResService.save(wxFansMsgRes);
         return ResultGenerator.genSuccessResult();
     }
 
     @PostMapping("/delete")
     public Result delete(@RequestParam Integer id) {
-        ${modelNameLowerCamel}Service.deleteById(id);
+        wxFansMsgResService.deleteById(id);
         return ResultGenerator.genSuccessResult();
     }
 
     @PostMapping("/update")
-    public Result update(@RequestBody ${modelNameUpperCamel} ${modelNameLowerCamel}) {
-        ${modelNameLowerCamel}Service.update(${modelNameLowerCamel});
+    public Result update(@RequestBody WxFansMsgRes wxFansMsgRes) {
+        wxFansMsgResService.update(wxFansMsgRes);
         return ResultGenerator.genSuccessResult();
     }
 
     @PostMapping("/detail")
     public Result detail(@RequestParam Integer id) {
-        ${modelNameUpperCamel} ${modelNameLowerCamel} = ${modelNameLowerCamel}Service.findById(id);
-        return ResultGenerator.genSuccessResult(${modelNameLowerCamel});
+        WxFansMsgRes wxFansMsgRes = wxFansMsgResService.findById(id);
+        return ResultGenerator.genSuccessResult(wxFansMsgRes);
     }
 
     @PostMapping("/list")
     public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer limit) {
         PageHelper.startPage(page, limit);
-        ${modelNameUpperCamel} ${modelNameLowerCamel} = new ${modelNameUpperCamel}();
-        List<${modelNameUpperCamel}> list = ${modelNameLowerCamel}Service.findList(${modelNameLowerCamel});
+        WxFansMsgRes wxFansMsgRes = new WxFansMsgRes();
+        List<WxFansMsgRes> list = wxFansMsgResService.findList( wxFansMsgRes );
         PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genSuccessResult(pageInfo);
     }

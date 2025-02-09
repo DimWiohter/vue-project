@@ -41,6 +41,12 @@ public class WxAccountController extends AbstractController{
     @Autowired
     WxConfig wxConfig;
 
+    @Autowired
+    WxFansMsgService wxFansMsgService;
+
+    @Autowired
+    WxFansMsgResService wxFansMsgResService;
+
     @PostMapping("/add")
     public Result add(@RequestBody WxAccount wxAccount) {
         wxAccount.setCreateTime( DateUtil.date() );
@@ -53,7 +59,7 @@ public class WxAccountController extends AbstractController{
     @PostMapping("/delete")
     public Result delete(@RequestParam Integer id) {
 
-        //删除公众号账户，先删除欢迎语、关键字、粉丝、菜单
+        //删除公众号账户，先删除欢迎语、关键字、粉丝、菜单、粉丝消息
         WxSubscribeText wxSubscribeTextTpl = new WxSubscribeText();
         wxSubscribeTextTpl.setWxAccountId( String.valueOf( id ) );
         List<WxSubscribeText> wxSubscribeTextList = wxSubscribeTextService.findList( wxSubscribeTextTpl);
@@ -80,6 +86,19 @@ public class WxAccountController extends AbstractController{
         List<WxMenu> wxMenuList = wxMenuService.findList( wxMenuTpl );
         wxMenuList.forEach( temp -> {
             wxMenuService.deleteById( temp.getId() );
+        } );
+
+        WxFansMsg wxFansMsgTpl = new WxFansMsg();
+        wxFansMsgTpl.setWxAccountId( String.valueOf( id ) );
+        List<WxFansMsg> wxFansMsgList = wxFansMsgService.findList( wxFansMsgTpl );
+        wxFansMsgList.forEach( temp -> {
+            WxFansMsgRes wxFansMsgResTpl = new WxFansMsgRes();
+            wxFansMsgResTpl.setFansMsgId( String.valueOf( temp.getId() ) );
+            List<WxFansMsgRes> wxFansMsgResList = wxFansMsgResService.findList( wxFansMsgResTpl );
+            wxFansMsgResList.forEach( _temp -> {
+                wxFansMsgResService.deleteById( _temp.getId() );
+            } );
+            wxFansMsgService.deleteById( temp.getId() );
         } );
 
         wxAccountService.deleteById(id);

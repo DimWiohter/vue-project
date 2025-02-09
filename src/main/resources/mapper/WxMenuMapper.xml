@@ -38,12 +38,34 @@
 
   <select id="listTreeMenu" parameterType="com.coffeewx.model.WxMenu" resultMap="BaseResultMap">
     SELECT
-        t.*, t2.`name` AS wx_account_name,
-        t3.tpl_name
+    t.*, t2.`name` AS wx_account_name,
+    (
+    CASE t.menu_type
+    WHEN '1' THEN
+    (
+    SELECT
+    tpl_name
     FROM
-        t_wx_menu t
+    t_wx_text_template tt
+    WHERE
+    tt.id = t.tpl_id
+    )
+    WHEN '2' THEN
+    (
+    SELECT
+    tpl_name
+    FROM
+    t_wx_news_template tt2
+    WHERE
+    tt2.id = t.tpl_id
+    )
+    ELSE
+    ''
+    END
+    ) AS tpl_name
+    FROM
+    t_wx_menu t
     LEFT JOIN t_wx_account t2 ON t.wx_account_id = t2.id
-    LEFT JOIN t_wx_text_template t3 ON t.tpl_id = t3.id
     WHERE
         1 = 1
       <if test="wxAccountId != null and wxAccountId != ''">
