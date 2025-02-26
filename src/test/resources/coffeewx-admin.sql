@@ -16,21 +16,6 @@ Date: 2019-03-15 12:14:43
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for `pdman_db_version`
--- ----------------------------
-DROP TABLE IF EXISTS `pdman_db_version`;
-CREATE TABLE `pdman_db_version` (
-  `DB_VERSION` varchar(256) DEFAULT NULL,
-  `VERSION_DESC` varchar(1024) DEFAULT NULL,
-  `CREATED_TIME` varchar(32) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of pdman_db_version
--- ----------------------------
-INSERT INTO `pdman_db_version` VALUES ('v1.0.1', 'dsfdf', '2019-03-11 11:26:50');
-
--- ----------------------------
 -- Table structure for `sys_user`
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user`;
