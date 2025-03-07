@@ -71,14 +71,12 @@ $ npm run build:prod
 ```
 
 # SQL脚本
-```
+```sh
 /src/test/resources/coffeewx-admin.sql
 ```
 
-
-```
 # CodeGenerator代码自动生成工具
-```
+```sh
 注意事项：
 1、执行完main方法，生成代码，genCodeByCustomModelName("sys_user","User")
 2、修改UserMapper.java，添加findList方法，可参考其他模块。
