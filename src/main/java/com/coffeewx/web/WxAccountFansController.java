@@ -5,14 +5,20 @@ import com.coffeewx.core.Result;
 import com.coffeewx.core.ResultGenerator;
 import com.coffeewx.model.WxAccount;
 import com.coffeewx.model.WxAccountFans;
+import com.coffeewx.model.WxNewsTemplate;
+import com.coffeewx.model.vo.FansMsgVO;
 import com.coffeewx.service.WxAccountFansService;
 import com.coffeewx.service.WxAccountService;
+import com.coffeewx.service.WxNewsTemplateService;
 import com.coffeewx.wxmp.config.WxMpConfig;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.mp.api.WxMpKefuService;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.WxMpUserService;
+import me.chanjar.weixin.mp.bean.kefu.WxMpKefuMessage;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import me.chanjar.weixin.mp.bean.result.WxMpUserList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +39,9 @@ public class WxAccountFansController extends AbstractController{
 
     @Autowired
     private WxAccountService wxAccountService;
+
+    @Autowired
+    private WxNewsTemplateService wxNewsTemplateService;
 
     @PostMapping("/add")
     public Result add(@RequestBody WxAccountFans wxAccountFans) {
@@ -137,6 +146,38 @@ public class WxAccountFansController extends AbstractController{
         } catch (WxErrorException e) {
             e.printStackTrace();
             return ResultGenerator.genFailResult( e.getMessage() );
+        }
+        return ResultGenerator.genSuccessResult();
+    }
+
+    @PostMapping("/sendMsg")
+    public Result sendMsg(@RequestBody FansMsgVO fansMsgVO) {
+        WxAccountFans wxAccountFans = wxAccountFansService.findById( Integer.valueOf( fansMsgVO.getFansId() ) );
+        WxAccount wxAccount = wxAccountService.findById( Integer.parseInt( wxAccountFans.getWxAccountId() ) );
+        WxMpService wxMpService = WxMpConfig.getMpServices().get( wxAccount.getAppid() );
+        WxMpKefuService wxMpKefuService = wxMpService.getKefuService();
+        WxMpKefuMessage wxMpKefuMessage = new WxMpKefuMessage();
+        wxMpKefuMessage.setToUser(wxAccountFans.getOpenid());
+        if(fansMsgVO.getMsgType().equals( WxConsts.KefuMsgType.TEXT )){
+            wxMpKefuMessage.setMsgType( WxConsts.KefuMsgType.TEXT);
+            wxMpKefuMessage.setContent(fansMsgVO.getContent());
+            try {
+                wxMpKefuService.sendKefuMessage( wxMpKefuMessage );
+            } catch (WxErrorException e) {
+                e.printStackTrace();
+                return ResultGenerator.genFailResult( e.getMessage() );
+            }
+        }
+        if(fansMsgVO.getMsgType().equals( WxConsts.KefuMsgType.NEWS )){
+            wxMpKefuMessage.setMsgType( WxConsts.KefuMsgType.NEWS);
+            WxNewsTemplate wxNewsTemplate = wxNewsTemplateService.findById( Integer.parseInt( fansMsgVO.getTplId() ) );
+            wxMpKefuMessage.setMediaId( wxNewsTemplate.getMediaId() );
+            try {
+                wxMpKefuService.sendKefuMessage( wxMpKefuMessage );
+            } catch (WxErrorException e) {
+                e.printStackTrace();
+                return ResultGenerator.genFailResult( e.getMessage() );
+            }
         }
         return ResultGenerator.genSuccessResult();
     }

@@ -40,8 +40,8 @@ import java.util.List;
 public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
 
     private final Logger logger = LoggerFactory.getLogger( WebMvcConfigurer.class );
-    @Value("${spring.profiles.active}")
-    private String env;//当前激活的配置文件
+//    @Value("${spring.profiles.active}")
+//    private String env;//当前激活的配置文件
 
     //使用阿里 FastJson 作为JSON MessageConverter
 //    @Override
