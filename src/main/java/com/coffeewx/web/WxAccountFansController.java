@@ -168,8 +168,8 @@ public class WxAccountFansController extends AbstractController{
                 return ResultGenerator.genFailResult( e.getMessage() );
             }
         }
-        if(fansMsgVO.getMsgType().equals( WxConsts.KefuMsgType.NEWS )){
-            wxMpKefuMessage.setMsgType( WxConsts.KefuMsgType.NEWS);
+        if(fansMsgVO.getMsgType().equals( WxConsts.KefuMsgType.MPNEWS )){
+            wxMpKefuMessage.setMsgType( WxConsts.KefuMsgType.MPNEWS);
             WxNewsTemplate wxNewsTemplate = wxNewsTemplateService.findById( Integer.parseInt( fansMsgVO.getTplId() ) );
             wxMpKefuMessage.setMediaId( wxNewsTemplate.getMediaId() );
             try {

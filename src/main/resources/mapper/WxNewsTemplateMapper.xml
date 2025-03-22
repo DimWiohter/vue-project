@@ -26,6 +26,9 @@
     <if test="tplName != null and tplName != ''">
       AND t.tpl_name LIKE CONCAT('%', #{tplName}, '%')
     </if>
+    <if test="isUpload != null and isUpload != ''">
+      AND t.is_upload = #{isUpload}
+    </if>
     ORDER BY t.update_time DESC
   </select>
 
