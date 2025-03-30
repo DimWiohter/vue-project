@@ -171,7 +171,7 @@ public class WxAccountFansController extends AbstractController{
         if(fansMsgVO.getMsgType().equals( WxConsts.KefuMsgType.MPNEWS )){
             wxMpKefuMessage.setMsgType( WxConsts.KefuMsgType.MPNEWS);
             WxNewsTemplate wxNewsTemplate = wxNewsTemplateService.findById( Integer.parseInt( fansMsgVO.getTplId() ) );
-            wxMpKefuMessage.setMediaId( wxNewsTemplate.getMediaId() );
+            wxMpKefuMessage.setMpNewsMediaId( wxNewsTemplate.getMediaId() );
             try {
                 wxMpKefuService.sendKefuMessage( wxMpKefuMessage );
             } catch (WxErrorException e) {

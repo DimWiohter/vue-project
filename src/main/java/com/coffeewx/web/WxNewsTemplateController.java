@@ -182,7 +182,8 @@ public class WxNewsTemplateController extends AbstractController {
                 article.setShowCoverPic( wxNewsArticleItem.getShowCoverPic().equals( "1" ) ? true : false );
                 article.setThumbMediaId( wxNewsArticleItem.getThumbMediaId() );
                 article.setTitle( wxNewsArticleItem.getTitle() );
-
+                article.setNeedOpenComment( wxNewsArticleItem.getNeedOpenComment().equals( "1" ) ? true : false );
+                article.setOnlyFansCanComment( wxNewsArticleItem.getOnlyFansCanComment().equals( "1" ) ? true : false );
                 wxMpMaterialNews.addArticle( article );
 
                 wxNewsArticleItemService.save( wxNewsArticleItem );
@@ -211,6 +212,8 @@ public class WxNewsTemplateController extends AbstractController {
                 article.setShowCoverPic( wxNewsArticleItem.getShowCoverPic().equals( "1" ) ? true : false );
                 article.setThumbMediaId( wxNewsArticleItem.getThumbMediaId() );
                 article.setTitle( wxNewsArticleItem.getTitle() );
+                article.setNeedOpenComment( wxNewsArticleItem.getNeedOpenComment().equals( "1" ) ? true : false );
+                article.setOnlyFansCanComment( wxNewsArticleItem.getOnlyFansCanComment().equals( "1" ) ? true : false );
                 wxMpMaterialNews.addArticle( article );
 
             }
