@@ -30,6 +30,7 @@ import java.io.File;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by CodeGenerator on 2019/03/11.
@@ -267,5 +268,28 @@ public class WxNewsTemplateController extends AbstractController {
         }
         return ResultGenerator.genSuccessResult( list );
     }
+
+    /**
+     * 查询某个公众号的图文并且已经上传的，并且是单个图文的
+     *
+     * @param wxAccountId
+     * @return com.coffeewx.core.Result
+     * @author Kevin
+     * @date 2019-03-14 18:46:42
+     */
+    @PostMapping("/listAll2")
+    public Result listAll2(@RequestParam String wxAccountId) {
+        List <WxNewsTemplate> list = Lists.newArrayList();
+        List <WxNewsTemplate> filterList = Lists.newArrayList();
+        if (StringUtils.isNotBlank( wxAccountId )) {
+            WxNewsTemplate wxNewsTemplate = new WxNewsTemplate();
+            wxNewsTemplate.setWxAccountId( wxAccountId );
+            wxNewsTemplate.setIsUpload( "1" );
+            list = wxNewsTemplateService.findList( wxNewsTemplate );
+            filterList = list.stream().filter(temp -> temp.getCountArticle() == 1).collect( Collectors.toList());
+        }
+        return ResultGenerator.genSuccessResult( filterList );
+    }
+
 
 }
