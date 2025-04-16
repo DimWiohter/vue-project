@@ -192,33 +192,40 @@
 
     </dependencies>
 
-    <!--mvn clean package -Dmaven.test.skip=true -Pdev 表示打包开发环境 已废弃-->
-    <!--<profiles>-->
-    <!--&lt;!&ndash; 开发环境 &ndash;&gt;-->
-    <!--<profile>-->
-    <!--<id>dev</id>-->
-    <!--<activation>-->
-    <!--<activeByDefault>true</activeByDefault>-->
-    <!--</activation>-->
-    <!--<properties>-->
-    <!--<spring.profiles.active>dev</spring.profiles.active>-->
-    <!--</properties>-->
-    <!--</profile>-->
-    <!--&lt;!&ndash; 测试环境 &ndash;&gt;-->
-    <!--<profile>-->
-    <!--<id>test</id>-->
-    <!--<properties>-->
-    <!--<spring.profiles.active>test</spring.profiles.active>-->
-    <!--</properties>-->
-    <!--</profile>-->
-    <!--&lt;!&ndash; 生产环境 &ndash;&gt;-->
-    <!--<profile>-->
-    <!--<id>prod</id>-->
-    <!--<properties>-->
-    <!--<spring.profiles.active>prod</spring.profiles.active>-->
-    <!--</properties>-->
-    <!--</profile>-->
-    <!--</profiles>-->
+    <!--mvn clean package -Dmaven.test.skip=true -Pdev 表示打包开发环境 -->
+    <profiles>
+        <!-- 开发环境 -->
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <spring.profiles.active>dev</spring.profiles.active>
+            </properties>
+        </profile>
+        <!-- 测试环境 -->
+        <profile>
+            <id>test</id>
+            <properties>
+                <spring.profiles.active>test</spring.profiles.active>
+            </properties>
+        </profile>
+        <!-- 心安草 -->
+        <profile>
+            <id>testxac</id>
+            <properties>
+                <spring.profiles.active>testxac</spring.profiles.active>
+            </properties>
+        </profile>
+        <!-- 生产环境 -->
+        <profile>
+            <id>prod</id>
+            <properties>
+                <spring.profiles.active>prod</spring.profiles.active>
+            </properties>
+        </profile>
+    </profiles>
 
     <build>
         <resources>
@@ -232,8 +239,15 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <fork>true</fork>
+                    <mainClass>com.coffeewx.Application</mainClass>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -241,22 +255,6 @@
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                     <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-            <!-- mvn clean package -DskipTests -DportableConfig="portable/prod-env.xml" -->
-            <plugin>
-                <groupId>com.juvenxu.portable-config-maven-plugin</groupId>
-                <artifactId>portable-config-maven-plugin</artifactId>
-                <version>1.1.5</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>replace-package</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <portableConfig></portableConfig>
                 </configuration>
             </plugin>
         </plugins>
