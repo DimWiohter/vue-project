@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/bin/sh
+
 echo Stopping application
 source ./stop.sh
 echo Starting application
