@@ -27,6 +27,11 @@ http://{域名}/api/wx/portal/{appid}
 
 # coffeewx-web-ui 打包部署
 ```sh
+
+1、修改打包对应环境的配置文件
+例如：打包prod环境
+修改/coffeewx-web-ui/config/prod中的BASE_API变量，修改为对应后台地址
+2、打包部署
 $ npm install
 $ npm run dev
 $ npm run build:prod
