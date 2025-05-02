@@ -40,7 +40,7 @@ $ npm run build:prod
 # coffeewx-admin-api 打包部署
 ```sh
 1、修改/resources/application-prod.properties配置文件中对应配置，根据部署环境不同，切换配置文件
-   mvn clean package -DskipTests -Pprod"
+   mvn clean package -DskipTests -Pprod
 2、Copy项目中/bin目录下三个脚本，和打包之后的coffeewx-admin-api-1.0.jar文件放在同一个目录
 3、脚本授权
     chmod +x startup.sh
