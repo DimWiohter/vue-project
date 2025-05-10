@@ -1,9 +1,9 @@
 package com.coffeewx.service.impl;
 
+import com.coffeewx.core.AbstractService;
 import com.coffeewx.dao.WxAccountMapper;
 import com.coffeewx.model.WxAccount;
 import com.coffeewx.service.WxAccountService;
-import com.coffeewx.core.AbstractService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

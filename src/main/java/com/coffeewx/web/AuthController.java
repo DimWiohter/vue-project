@@ -1,7 +1,6 @@
 package com.coffeewx.web;
 
 import com.coffeewx.annotation.IgnoreToken;
-import com.coffeewx.core.ProjectConstant;
 import com.coffeewx.core.Result;
 import com.coffeewx.core.ResultGenerator;
 import com.coffeewx.model.vo.TokenReqVO;

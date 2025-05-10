@@ -1,11 +1,13 @@
 package com.coffeewx.web;
 
 import cn.hutool.core.date.DateUtil;
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.coffeewx.core.Result;
 import com.coffeewx.core.ResultGenerator;
-import com.coffeewx.model.*;
+import com.coffeewx.model.WxAccount;
+import com.coffeewx.model.WxMenu;
+import com.coffeewx.model.WxNewsTemplate;
+import com.coffeewx.model.WxTextTemplate;
 import com.coffeewx.model.vo.MenuTreeNode;
 import com.coffeewx.service.WxAccountService;
 import com.coffeewx.service.WxMenuService;
@@ -19,13 +21,9 @@ import me.chanjar.weixin.common.bean.menu.WxMenuButton;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpMenuService;
 import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.api.WxMpUserService;
-import me.chanjar.weixin.mp.bean.result.WxMpUser;
-import me.chanjar.weixin.mp.bean.result.WxMpUserList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -36,15 +34,6 @@ import java.util.List;
 public class WxMenuController {
     @Autowired
     private WxMenuService wxMenuService;
-
-    @Autowired
-    private WxAccountService wxAccountService;
-
-    @Autowired
-    private WxTextTemplateService wxTextTemplateService;
-
-    @Autowired
-    private WxNewsTemplateService wxNewsTemplateService;
 
     @PostMapping("/add")
     public Result add(@RequestBody WxMenu wxMenu) {
@@ -131,90 +120,11 @@ public class WxMenuController {
     }
 
     @PostMapping("/syncAccountMenu")
-    public Result syncAccountMenu(@RequestBody WxAccount wxAccount) {
+    public Result syncAccountMenu(@RequestBody WxAccount wxAccount) throws Exception{
         if(wxAccount.getId() == null){
             return ResultGenerator.genFailResult( "参数不全" );
         }
-
-        List<WxMenu> list = wxMenuService.listTreeMenu(String.valueOf( wxAccount.getId() ));
-        List<MenuTreeNode> menuTreeNodeList = wxMenuService.convertTreeMenu( list );
-
-        wxAccount = wxAccountService.findById( wxAccount.getId() );
-        WxMpService wxMpService = WxMpConfig.getMpServices().get( wxAccount.getAppid() );
-        WxMpMenuService wxMpMenuService = wxMpService.getMenuService();
-        try {
-            wxMpMenuService.menuDelete();
-            me.chanjar.weixin.common.bean.menu.WxMenu wxMenu = new me.chanjar.weixin.common.bean.menu.WxMenu();
-
-            for (int i = 0; i < menuTreeNodeList.size(); i++) {
-                MenuTreeNode menuTreeNode = menuTreeNodeList.get( i );
-                WxMenuButton wxMenuButton = new WxMenuButton();
-                if(menuTreeNode.getMenuType().equals( "1" )){
-                    wxMenuButton.setType( WxConsts.MenuButtonType.CLICK);
-                    wxMenuButton.setName( menuTreeNode.getMenuName() );
-                    WxTextTemplate wxTextTemplate = wxTextTemplateService.findById( Integer.parseInt( menuTreeNode.getTplId() ) );
-                    wxMenuButton.setKey( wxTextTemplate.getContent() );
-                }
-                if(menuTreeNode.getMenuType().equals( "2" )){
-                    wxMenuButton.setType( WxConsts.MenuButtonType.MEDIA_ID);
-                    wxMenuButton.setName( menuTreeNode.getMenuName() );
-                    WxNewsTemplate wxNewsTemplate = wxNewsTemplateService.findById( Integer.parseInt( menuTreeNode.getTplId() ) );
-                    wxMenuButton.setMediaId( wxNewsTemplate.getMediaId() );
-                }
-                if(menuTreeNode.getMenuType().equals( "3" )){
-                    wxMenuButton.setType( WxConsts.MenuButtonType.VIEW);
-                    wxMenuButton.setName( menuTreeNode.getMenuName() );
-                    wxMenuButton.setUrl( menuTreeNode.getMenuUrl() );
-                }
-                if(menuTreeNode.getMenuType().equals( "4" )){
-                    wxMenuButton.setType( WxConsts.MenuButtonType.MINIPROGRAM);
-                    wxMenuButton.setName( menuTreeNode.getMenuName() );
-                    wxMenuButton.setUrl( menuTreeNode.getMenuUrl() );
-                    wxMenuButton.setAppId( menuTreeNode.getMiniprogramAppid() );
-                    wxMenuButton.setPagePath( menuTreeNode.getMiniprogramPagepath() );
-                }
-
-                if(menuTreeNode.getChildren().size() > 0){
-                    for (int j = 0; j < menuTreeNode.getChildren().size(); j++) {
-                        MenuTreeNode menuTreeNodeSub = menuTreeNode.getChildren().get( j );
-                        WxMenuButton wxMenuButtonSub = new WxMenuButton();
-                        if(menuTreeNodeSub.getMenuType().equals( "1" )){
-                            wxMenuButtonSub.setType( WxConsts.MenuButtonType.CLICK);
-                            wxMenuButtonSub.setName( menuTreeNodeSub.getMenuName() );
-                            WxTextTemplate wxTextTemplateSub = wxTextTemplateService.findById( Integer.parseInt( menuTreeNodeSub.getTplId() ) );
-                            wxMenuButtonSub.setKey( wxTextTemplateSub.getContent() );
-                        }
-                        if(menuTreeNodeSub.getMenuType().equals( "2" )){
-                            wxMenuButtonSub.setType( WxConsts.MenuButtonType.MEDIA_ID);
-                            wxMenuButtonSub.setName( menuTreeNodeSub.getMenuName() );
-                            WxNewsTemplate wxNewsTemplate = wxNewsTemplateService.findById( Integer.parseInt( menuTreeNodeSub.getTplId() ) );
-                            wxMenuButtonSub.setMediaId( wxNewsTemplate.getMediaId() );
-                        }
-                        if(menuTreeNodeSub.getMenuType().equals( "3" )){
-                            wxMenuButtonSub.setType( WxConsts.MenuButtonType.VIEW);
-                            wxMenuButtonSub.setName( menuTreeNodeSub.getMenuName() );
-                            wxMenuButtonSub.setUrl( menuTreeNodeSub.getMenuUrl() );
-                        }
-                        if(menuTreeNode.getMenuType().equals( "4" )){
-                            wxMenuButtonSub.setType( WxConsts.MenuButtonType.MINIPROGRAM);
-                            wxMenuButtonSub.setName( menuTreeNode.getMenuName() );
-                            wxMenuButtonSub.setUrl( menuTreeNode.getMenuUrl() );
-                            wxMenuButtonSub.setAppId( menuTreeNode.getMiniprogramAppid() );
-                            wxMenuButtonSub.setPagePath( menuTreeNode.getMiniprogramPagepath() );
-                        }
-                        wxMenuButton.getSubButtons().add( wxMenuButtonSub );
-                    }
-                }
-                wxMenu.getButtons().add(wxMenuButton);
-            }
-
-            wxMpMenuService.menuCreate( wxMenu );
-
-        } catch (WxErrorException e) {
-            e.printStackTrace();
-            return ResultGenerator.genFailResult( e.getMessage() );
-        }
-
+        wxMenuService.syncAccountMenu(wxAccount);
         return ResultGenerator.genSuccessResult();
     }
 

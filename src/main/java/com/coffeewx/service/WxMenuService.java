@@ -1,6 +1,8 @@
 package com.coffeewx.service;
-import com.coffeewx.model.WxMenu;
+
 import com.coffeewx.core.Service;
+import com.coffeewx.model.WxAccount;
+import com.coffeewx.model.WxMenu;
 import com.coffeewx.model.vo.MenuTreeNode;
 
 import java.util.List;
@@ -17,5 +19,7 @@ public interface WxMenuService extends Service<WxMenu> {
     List<WxMenu> listTreeMenu(String wxAccountId);
 
     List<MenuTreeNode> convertTreeMenu(List<WxMenu> list);
+
+    void syncAccountMenu(WxAccount wxAccount) throws Exception;
 
 }

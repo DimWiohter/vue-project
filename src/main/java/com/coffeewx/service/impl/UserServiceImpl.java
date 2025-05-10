@@ -1,9 +1,9 @@
 package com.coffeewx.service.impl;
 
+import com.coffeewx.core.AbstractService;
 import com.coffeewx.dao.UserMapper;
 import com.coffeewx.model.User;
 import com.coffeewx.service.UserService;
-import com.coffeewx.core.AbstractService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

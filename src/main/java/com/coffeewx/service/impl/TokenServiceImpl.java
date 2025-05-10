@@ -1,10 +1,10 @@
 package com.coffeewx.service.impl;
 
 import cn.hutool.core.util.IdUtil;
-import com.google.common.collect.Maps;
 import com.coffeewx.core.ProjectConstant;
 import com.coffeewx.core.redis.CacheService;
 import com.coffeewx.service.TokenService;
+import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

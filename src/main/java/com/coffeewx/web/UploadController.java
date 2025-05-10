@@ -1,12 +1,10 @@
 package com.coffeewx.web;
 
 import com.coffeewx.annotation.IgnoreToken;
-import com.coffeewx.core.ProjectConstant;
 import com.coffeewx.core.Result;
 import com.coffeewx.core.ResultGenerator;
 import com.qiniu.util.Auth;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,7 +53,7 @@ public class UploadController extends AbstractController {
             return ResultGenerator.genFailResult( "文件类型为空" );
         }
 
-        if ("GIF".equals( imgType.toUpperCase() ) || "PNG".equals( imgType.toUpperCase() ) || "JPG".equals( imgType.toUpperCase() )) {
+        if ("GIF".equals( imgType.toUpperCase() ) || "PNG".equals( imgType.toUpperCase() ) || "JPG".equals( imgType.toUpperCase() ) || "JPEG".equals( imgType.toUpperCase() )) {
             // 项目在容器中实际发布运行的根路径
             //String realPath = request.getSession().getServletContext().getRealPath( "/" );
 

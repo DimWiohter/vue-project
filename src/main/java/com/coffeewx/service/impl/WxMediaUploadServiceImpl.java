@@ -1,13 +1,13 @@
 package com.coffeewx.service.impl;
 
+import com.coffeewx.core.AbstractService;
 import com.coffeewx.dao.WxMediaUploadMapper;
 import com.coffeewx.model.WxMediaUpload;
 import com.coffeewx.service.WxMediaUploadService;
-import com.coffeewx.core.AbstractService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 /**

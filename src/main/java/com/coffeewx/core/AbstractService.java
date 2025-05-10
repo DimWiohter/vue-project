@@ -2,6 +2,8 @@ package com.coffeewx.core;
 
 
 import org.apache.ibatis.exceptions.TooManyResultsException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.entity.Condition;
 
@@ -13,6 +15,8 @@ import java.util.List;
  * 基于通用MyBatis Mapper插件的Service接口的实现
  */
 public abstract class AbstractService<T> implements Service <T> {
+
+    protected final Logger logger = LoggerFactory.getLogger( this.getClass() );
 
     @Autowired
     protected Mapper <T> mapper;

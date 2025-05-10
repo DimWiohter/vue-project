@@ -4,7 +4,6 @@ import cn.hutool.crypto.SecureUtil;
 import com.coffeewx.core.ProjectConstant;
 import com.coffeewx.core.ResultCode;
 import com.coffeewx.core.ServiceException;
-import com.coffeewx.dao.UserMapper;
 import com.coffeewx.model.User;
 import com.coffeewx.model.vo.UserInfoVO;
 import com.coffeewx.model.vo.UserReqVO;

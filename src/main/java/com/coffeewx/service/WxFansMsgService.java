@@ -1,6 +1,8 @@
 package com.coffeewx.service;
-import com.coffeewx.model.WxFansMsg;
+
 import com.coffeewx.core.Service;
+import com.coffeewx.model.WxFansMsg;
+
 import java.util.List;
 
 /**
@@ -9,5 +11,7 @@ import java.util.List;
 public interface WxFansMsgService extends Service<WxFansMsg> {
 
     List<WxFansMsg> findList(WxFansMsg tWxFansMsg);
+
+    void updateResContent(WxFansMsg wxFansMsg) throws Exception;
 
 }

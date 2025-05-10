@@ -1,6 +1,8 @@
 package com.coffeewx.service;
-import com.coffeewx.model.WxNewsArticleItem;
+
 import com.coffeewx.core.Service;
+import com.coffeewx.model.WxNewsArticleItem;
+
 import java.util.List;
 
 /**

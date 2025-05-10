@@ -1,13 +1,11 @@
 package com.coffeewx.web;
+
 import cn.hutool.core.date.DateUtil;
-import com.coffeewx.annotation.IgnoreToken;
 import com.coffeewx.core.Result;
 import com.coffeewx.core.ResultGenerator;
 import com.coffeewx.model.*;
 import com.coffeewx.service.*;
 import com.coffeewx.wxmp.config.WxConfig;
-import com.coffeewx.wxmp.config.WxMpConfig;
-import com.coffeewx.wxmp.config.WxMpProperties;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
