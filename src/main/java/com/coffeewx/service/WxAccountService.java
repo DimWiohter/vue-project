@@ -13,4 +13,6 @@ public interface WxAccountService extends Service<WxAccount> {
 
     List<WxAccount> findList(WxAccount wxAccount);
 
+    void generateQRUrl(WxAccount wxAccount) throws Exception;
+
 }

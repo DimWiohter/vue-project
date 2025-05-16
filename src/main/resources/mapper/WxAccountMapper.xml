@@ -13,6 +13,7 @@
     <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="token" jdbcType="VARCHAR" property="token" />
     <result column="aeskey" jdbcType="VARCHAR" property="aeskey" />
+    <result column="qr_url" jdbcType="VARCHAR" property="qrUrl" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>

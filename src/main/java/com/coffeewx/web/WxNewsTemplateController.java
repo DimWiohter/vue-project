@@ -4,9 +4,12 @@ import cn.hutool.core.date.DateUtil;
 import com.coffeewx.core.ProjectConstant;
 import com.coffeewx.core.Result;
 import com.coffeewx.core.ResultGenerator;
+import com.coffeewx.model.WxAccountFans;
 import com.coffeewx.model.WxNewsArticleItem;
 import com.coffeewx.model.WxNewsTemplate;
+import com.coffeewx.model.vo.NewsPreviewVO;
 import com.coffeewx.model.vo.NewsTemplateVO;
+import com.coffeewx.service.WxAccountFansService;
 import com.coffeewx.service.WxNewsArticleItemService;
 import com.coffeewx.service.WxNewsTemplateService;
 import com.github.pagehelper.PageHelper;
@@ -32,6 +35,9 @@ public class WxNewsTemplateController extends AbstractController {
 
     @Autowired
     private WxNewsArticleItemService wxNewsArticleItemService;
+
+    @Autowired
+    WxAccountFansService wxAccountFansService;
 
     @PostMapping("/add")
     public Result add(@RequestBody WxNewsTemplate wxNewsTemplate) {
@@ -145,5 +151,20 @@ public class WxNewsTemplateController extends AbstractController {
         return ResultGenerator.genSuccessResult( filterList );
     }
 
+
+    @PostMapping("/filterFans")
+    public Result filterFans(@RequestParam String wxAccountId,@RequestParam String nicknameStr) {
+        WxAccountFans wxAccountFans = new WxAccountFans();
+        wxAccountFans.setWxAccountId( wxAccountId );
+        wxAccountFans.setNicknameStr( nicknameStr );
+        List<WxAccountFans> list = wxAccountFansService.findList( wxAccountFans);
+        return ResultGenerator.genSuccessResult( list );
+    }
+
+    @PostMapping("/sendNewsPreview")
+    public Result sendNewsPreview(@RequestBody NewsPreviewVO newsPreviewVO) throws Exception{
+        wxNewsTemplateService.sendNewsPreview( newsPreviewVO );
+        return ResultGenerator.genSuccessResult( );
+    }
 
 }

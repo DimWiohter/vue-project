@@ -2,6 +2,7 @@ package com.coffeewx.service;
 
 import com.coffeewx.core.Service;
 import com.coffeewx.model.WxNewsTemplate;
+import com.coffeewx.model.vo.NewsPreviewVO;
 import com.coffeewx.model.vo.NewsTemplateVO;
 
 import java.util.List;
@@ -16,5 +17,7 @@ public interface WxNewsTemplateService extends Service<WxNewsTemplate> {
     void addNews(NewsTemplateVO newsTemplateVO) throws Exception;
 
     void uploadNews(NewsTemplateVO newsTemplateVO) throws Exception;
+
+    void sendNewsPreview(NewsPreviewVO newsPreviewVO) throws Exception;
 
 }

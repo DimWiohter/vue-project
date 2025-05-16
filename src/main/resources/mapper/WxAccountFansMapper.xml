@@ -32,7 +32,7 @@
       AND t.gender = #{gender}
     </if>
     <if test="nicknameStr != null and nicknameStr != ''">
-      AND t.nickname LIKE CONCAT('%', #{nicknameStr}, '%')
+      AND t.nickname LIKE UPPER(CONCAT('%', #{nicknameStr}, '%')) OR t.nickname LIKE LOWER(CONCAT('%', #{nicknameStr}, '%'))
     </if>
     <if test="wxAccountId != null and wxAccountId != ''">
       AND t.wx_account_id = #{wxAccountId}

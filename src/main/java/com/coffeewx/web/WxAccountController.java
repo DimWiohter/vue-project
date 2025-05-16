@@ -134,4 +134,10 @@ public class WxAccountController extends AbstractController{
         return ResultGenerator.genSuccessResult(list);
     }
 
+    @PostMapping("/generateQRUrl")
+    public Result generateQRUrl(@RequestBody WxAccount wxAccount) throws Exception{
+        wxAccountService.generateQRUrl(wxAccount);
+        return ResultGenerator.genSuccessResult();
+    }
+
 }

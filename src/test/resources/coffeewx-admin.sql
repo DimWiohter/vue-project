@@ -53,6 +53,7 @@ CREATE TABLE `t_wx_account` (
   `url` varchar(100) DEFAULT NULL COMMENT '公众号url',
   `token` varchar(100) DEFAULT NULL COMMENT '公众号token',
   `aeskey` varchar(300) DEFAULT NULL COMMENT '加密密钥',
+  `qr_url` varchar(200) DEFAULT NULL COMMENT '二维码图片URL',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)

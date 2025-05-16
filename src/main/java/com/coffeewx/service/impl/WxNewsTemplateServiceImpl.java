@@ -9,9 +9,12 @@ import com.coffeewx.core.AbstractService;
 import com.coffeewx.core.ProjectConstant;
 import com.coffeewx.dao.WxNewsTemplateMapper;
 import com.coffeewx.model.WxAccount;
+import com.coffeewx.model.WxAccountFans;
 import com.coffeewx.model.WxNewsArticleItem;
 import com.coffeewx.model.WxNewsTemplate;
+import com.coffeewx.model.vo.NewsPreviewVO;
 import com.coffeewx.model.vo.NewsTemplateVO;
+import com.coffeewx.service.WxAccountFansService;
 import com.coffeewx.service.WxAccountService;
 import com.coffeewx.service.WxNewsArticleItemService;
 import com.coffeewx.service.WxNewsTemplateService;
@@ -20,6 +23,7 @@ import com.coffeewx.wxmp.config.WxMpConfig;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.bean.WxMpMassPreviewMessage;
 import me.chanjar.weixin.mp.bean.material.WxMediaImgUploadResult;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterial;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialNews;
@@ -45,6 +49,9 @@ public class WxNewsTemplateServiceImpl extends AbstractService<WxNewsTemplate> i
 
     @Autowired
     private WxAccountService wxAccountService;
+
+    @Autowired
+    private WxAccountFansService wxAccountFansService;
 
     @Autowired
     private WxNewsArticleItemService wxNewsArticleItemService;
@@ -178,6 +185,25 @@ public class WxNewsTemplateServiceImpl extends AbstractService<WxNewsTemplate> i
         wxNewsTemplate.setMediaId( wxMpMaterialUploadResult.getMediaId() );
         wxNewsTemplate.setUpdateTime( DateUtil.date() );
         this.update( wxNewsTemplate );
+    }
+
+    @Override
+    public void sendNewsPreview(NewsPreviewVO newsPreviewVO) throws Exception {
+        //获取公众号service
+        WxAccount wxAccount = wxAccountService.findById( Integer.parseInt( newsPreviewVO.getWxAccountId() ) );
+        WxMpService wxMpService = WxMpConfig.getMpServices().get( wxAccount.getAppid() );
+
+        WxNewsTemplate wxNewsTemplate = this.findById( Integer.valueOf( newsPreviewVO.getNewsId() ) );
+
+        for (int i = 0; i < newsPreviewVO.getFansSelected().size(); i++) {
+            WxAccountFans wxAccountFans = wxAccountFansService.findById( Integer.valueOf( newsPreviewVO.getFansSelected().get( i ) ) );
+            WxMpMassPreviewMessage wxMpMassPreviewMessage = new WxMpMassPreviewMessage();
+            wxMpMassPreviewMessage.setMsgType( WxConsts.MassMsgType.MPNEWS );
+            wxMpMassPreviewMessage.setMediaId( wxNewsTemplate.getMediaId() );
+            wxMpMassPreviewMessage.setToWxUserOpenid( wxAccountFans.getOpenid() );
+            wxMpService.getMassMessageService().massMessagePreview( wxMpMassPreviewMessage );
+        }
+        
     }
 
     private WxMpMaterialUploadResult uploadPhotoToWx(WxMpService wxMpService, String picPath) throws WxErrorException {
