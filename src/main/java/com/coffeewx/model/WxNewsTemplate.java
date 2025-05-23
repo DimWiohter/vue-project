@@ -51,6 +51,9 @@ public class WxNewsTemplate {
     private String wxAccountName;//公众号名称
 
     @Transient
-    private Integer countArticle;//公众号名称
+    private Integer countArticle;//图文数量
+
+    @Transient
+    private String isRelatedMenu;//是否已关联菜单
 
 }

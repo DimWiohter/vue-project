@@ -14,10 +14,14 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="wx_account_name" jdbcType="VARCHAR" property="wxAccountName" />
     <result column="count_article" jdbcType="VARCHAR" property="countArticle" />
+    <result column="is_related_menu" jdbcType="VARCHAR" property="isRelatedMenu"/>
   </resultMap>
 
   <select id="findList" parameterType="com.coffeewx.model.WxNewsTemplate" resultMap="BaseResultMap">
-    SELECT t.*, t2.`name` AS wx_account_name,(SELECT COUNT(1) from t_wx_news_article_item tt where tt.news_id = t.id) AS count_article FROM t_wx_news_template t
+    SELECT t.*, t2.`name` AS wx_account_name,
+    (SELECT COUNT(1) from t_wx_news_article_item tt where tt.news_id = t.id) AS count_article,
+    (CASE WHEN (SELECT COUNT(1) from t_wx_menu tt2 where tt2.tpl_id = t.id and tt2.menu_type = '2') > 0 THEN '1' ELSE '0' END) AS is_related_menu
+    FROM t_wx_news_template t
     LEFT JOIN t_wx_account t2 on t.wx_account_id = t2.id
     WHERE 1=1
     <if test="wxAccountId != null and wxAccountId != ''">
