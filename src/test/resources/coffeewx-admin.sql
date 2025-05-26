@@ -95,7 +95,7 @@ CREATE TABLE `t_wx_fans_msg` (
   `wx_account_id` varchar(32) DEFAULT NULL COMMENT '微信账号ID',
   `msg_type` varchar(32) DEFAULT NULL COMMENT '消息类型',
   `content` varchar(500) DEFAULT NULL COMMENT '内容',
-  `res_content` varchar(300) DEFAULT NULL COMMENT '最近一条回复内容',
+  `res_content` varchar(3000) DEFAULT NULL COMMENT '最近一条回复内容',
   `is_res` varchar(32) DEFAULT NULL COMMENT '是否已回复',
   `media_id` varchar(100) DEFAULT NULL COMMENT '微信素材ID',
   `pic_url` varchar(500) DEFAULT NULL COMMENT '微信图片URL',
@@ -112,7 +112,7 @@ DROP TABLE IF EXISTS `t_wx_fans_msg_res`;
 CREATE TABLE `t_wx_fans_msg_res` (
   `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `fans_msg_id` varchar(32) DEFAULT NULL COMMENT '粉丝消息ID',
-  `res_content` varchar(300) DEFAULT NULL COMMENT '回复内容',
+  `res_content` varchar(3000) DEFAULT NULL COMMENT '回复内容',
   `user_id` varchar(32) DEFAULT NULL COMMENT '用户ID',
   `user_name` varchar(32) DEFAULT NULL COMMENT '用户名',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',

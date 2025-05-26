@@ -2,8 +2,14 @@ package com.coffeewx.wxmp.handler;
 
 import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSON;
-import com.coffeewx.model.*;
-import com.coffeewx.service.*;
+import com.coffeewx.model.WxAccount;
+import com.coffeewx.model.WxAccountFans;
+import com.coffeewx.model.WxSubscribeText;
+import com.coffeewx.model.WxTextTemplate;
+import com.coffeewx.service.WxAccountFansService;
+import com.coffeewx.service.WxAccountService;
+import com.coffeewx.service.WxSubscribeTextService;
+import com.coffeewx.service.WxTextTemplateService;
 import com.coffeewx.wxmp.builder.TextBuilder;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
@@ -15,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.UnsupportedEncodingException;
-import java.util.List;
 import java.util.Map;
 
 /**

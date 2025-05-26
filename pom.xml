@@ -190,6 +190,13 @@
             <optional>true</optional>
         </dependency>
 
+        <!--easy-okhttp-->
+        <dependency>
+            <groupId>com.mzlion</groupId>
+            <artifactId>easy-okhttp</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+
     </dependencies>
 
     <!--mvn clean package -Dmaven.test.skip=true -Pdev 表示打包开发环境 -->
