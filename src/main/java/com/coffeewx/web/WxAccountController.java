@@ -45,6 +45,12 @@ public class WxAccountController extends AbstractController{
     @Autowired
     WxFansMsgResService wxFansMsgResService;
 
+    @Autowired
+    WxNewsTemplateService wxNewsTemplateService;
+
+    @Autowired
+    WxNewsArticleItemService wxNewsArticleItemService;
+
     @PostMapping("/add")
     public Result add(@RequestBody WxAccount wxAccount) {
         wxAccount.setCreateTime( DateUtil.date() );
@@ -97,6 +103,21 @@ public class WxAccountController extends AbstractController{
                 wxFansMsgResService.deleteById( _temp.getId() );
             } );
             wxFansMsgService.deleteById( temp.getId() );
+        } );
+
+
+        //删除关联的图文
+        WxNewsTemplate wxNewsTemplate = new WxNewsTemplate();
+        wxNewsTemplate.setWxAccountId( String.valueOf( id ) );
+        List<WxNewsTemplate> wxNewsTemplateList = wxNewsTemplateService.findList( wxNewsTemplate );
+        wxNewsTemplateList.forEach( temp -> {
+            WxNewsArticleItem wxNewsArticleItem = new WxNewsArticleItem();
+            wxNewsArticleItem.setNewsId( String.valueOf( temp.getId() ) );
+            List <WxNewsArticleItem> wxNewsArticleItemList = wxNewsArticleItemService.findList( wxNewsArticleItem );
+            wxNewsArticleItemList.forEach( _temp -> {
+                wxNewsArticleItemService.deleteById( _temp.getId() );
+            } );
+            wxNewsTemplateService.deleteById( temp.getId() );
         } );
 
         wxAccountService.deleteById(id);
