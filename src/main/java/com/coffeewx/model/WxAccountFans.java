@@ -1,12 +1,14 @@
 package com.coffeewx.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.google.common.collect.Lists;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Table(name = "t_wx_account_fans")
@@ -110,5 +112,7 @@ public class WxAccountFans {
     }
     @Transient
     private String wxAccountName;//公众号名称
+    @Transient
+    private List<WxFansTag> tagList = Lists.newArrayList();
 
 }

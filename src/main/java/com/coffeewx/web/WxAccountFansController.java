@@ -1,14 +1,17 @@
 package com.coffeewx.web;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.thread.ThreadUtil;
 import com.coffeewx.core.Result;
 import com.coffeewx.core.ResultGenerator;
 import com.coffeewx.model.WxAccount;
 import com.coffeewx.model.WxAccountFans;
 import com.coffeewx.model.vo.FansMsgVO;
 import com.coffeewx.service.WxAccountFansService;
+import com.coffeewx.service.WxFansTagService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -22,6 +25,9 @@ import java.util.List;
 public class WxAccountFansController extends AbstractController{
     @Resource
     private WxAccountFansService wxAccountFansService;
+
+    @Autowired
+    WxFansTagService wxFansTagService;
 
     @PostMapping("/add")
     public Result add(@RequestBody WxAccountFans wxAccountFans) {
@@ -67,7 +73,29 @@ public class WxAccountFansController extends AbstractController{
         if(wxAccount.getId() == null){
             return ResultGenerator.genFailResult( "参数不全" );
         }
-        wxAccountFansService.syncAccountFans( wxAccount );
+        //异步同步标签
+        ThreadUtil.execAsync( new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    wxFansTagService.syncFansTag( wxAccount );
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        } );
+        //异步同步fans
+        ThreadUtil.execAsync( new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    wxAccountFansService.syncAccountFans( wxAccount );
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        } );
+
         return ResultGenerator.genSuccessResult();
     }
 

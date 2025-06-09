@@ -15,4 +15,6 @@ public interface WxAccountService extends Service<WxAccount> {
 
     void generateQRUrl(WxAccount wxAccount) throws Exception;
 
+    void deleteRelation(String wxAccountId) throws Exception;
+
 }

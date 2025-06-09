@@ -23,33 +23,8 @@ public class WxAccountController extends AbstractController{
     @Resource
     private WxAccountService wxAccountService;
 
-
-    @Autowired
-    WxSubscribeTextService wxSubscribeTextService;
-
-    @Autowired
-    WxReceiveTextService wxReceiveTextService;
-
-    @Autowired
-    WxAccountFansService wxAccountFansService;
-
-    @Autowired
-    WxMenuService wxMenuService;
-
     @Autowired
     WxConfig wxConfig;
-
-    @Autowired
-    WxFansMsgService wxFansMsgService;
-
-    @Autowired
-    WxFansMsgResService wxFansMsgResService;
-
-    @Autowired
-    WxNewsTemplateService wxNewsTemplateService;
-
-    @Autowired
-    WxNewsArticleItemService wxNewsArticleItemService;
 
     @PostMapping("/add")
     public Result add(@RequestBody WxAccount wxAccount) {
@@ -61,66 +36,8 @@ public class WxAccountController extends AbstractController{
     }
 
     @PostMapping("/delete")
-    public Result delete(@RequestParam Integer id) {
-
-        //删除公众号账户，先删除欢迎语、关键字、粉丝、菜单、粉丝消息
-        WxSubscribeText wxSubscribeTextTpl = new WxSubscribeText();
-        wxSubscribeTextTpl.setWxAccountId( String.valueOf( id ) );
-        List<WxSubscribeText> wxSubscribeTextList = wxSubscribeTextService.findList( wxSubscribeTextTpl);
-        wxSubscribeTextList.forEach( temp -> {
-            wxSubscribeTextService.deleteById(temp.getId());
-        });
-
-        WxReceiveText wxReceiveTextTpl = new WxReceiveText();
-        wxReceiveTextTpl.setWxAccountId( String.valueOf( id ) );
-        List<WxReceiveText> wxReceiveTextList = wxReceiveTextService.findList( wxReceiveTextTpl );
-        wxReceiveTextList.forEach( temp -> {
-            wxReceiveTextService.deleteById( temp.getId() );
-        } );
-
-        WxAccountFans wxAccountFansTpl = new WxAccountFans();
-        wxAccountFansTpl.setWxAccountId( String.valueOf( id ) );
-        List<WxAccountFans> wxAccountFansList = wxAccountFansService.findList( wxAccountFansTpl );
-        wxAccountFansList.forEach( temp -> {
-            wxAccountFansService.deleteById( temp.getId() );
-        } );
-
-        WxMenu wxMenuTpl = new WxMenu();
-        wxMenuTpl.setWxAccountId( String.valueOf( id ) );
-        List<WxMenu> wxMenuList = wxMenuService.findList( wxMenuTpl );
-        wxMenuList.forEach( temp -> {
-            wxMenuService.deleteById( temp.getId() );
-        } );
-
-        WxFansMsg wxFansMsgTpl = new WxFansMsg();
-        wxFansMsgTpl.setWxAccountId( String.valueOf( id ) );
-        List<WxFansMsg> wxFansMsgList = wxFansMsgService.findList( wxFansMsgTpl );
-        wxFansMsgList.forEach( temp -> {
-            WxFansMsgRes wxFansMsgResTpl = new WxFansMsgRes();
-            wxFansMsgResTpl.setFansMsgId( String.valueOf( temp.getId() ) );
-            List<WxFansMsgRes> wxFansMsgResList = wxFansMsgResService.findList( wxFansMsgResTpl );
-            wxFansMsgResList.forEach( _temp -> {
-                wxFansMsgResService.deleteById( _temp.getId() );
-            } );
-            wxFansMsgService.deleteById( temp.getId() );
-        } );
-
-
-        //删除关联的图文
-        WxNewsTemplate wxNewsTemplate = new WxNewsTemplate();
-        wxNewsTemplate.setWxAccountId( String.valueOf( id ) );
-        List<WxNewsTemplate> wxNewsTemplateList = wxNewsTemplateService.findList( wxNewsTemplate );
-        wxNewsTemplateList.forEach( temp -> {
-            WxNewsArticleItem wxNewsArticleItem = new WxNewsArticleItem();
-            wxNewsArticleItem.setNewsId( String.valueOf( temp.getId() ) );
-            List <WxNewsArticleItem> wxNewsArticleItemList = wxNewsArticleItemService.findList( wxNewsArticleItem );
-            wxNewsArticleItemList.forEach( _temp -> {
-                wxNewsArticleItemService.deleteById( _temp.getId() );
-            } );
-            wxNewsTemplateService.deleteById( temp.getId() );
-        } );
-
-        wxAccountService.deleteById(id);
+    public Result delete(@RequestParam Integer id) throws Exception{
+        wxAccountService.deleteRelation(String.valueOf( id ));
         wxConfig.initWxConfig();
         return ResultGenerator.genSuccessResult();
     }

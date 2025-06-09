@@ -9,6 +9,7 @@ import com.coffeewx.model.WxAccountFans;
 import com.coffeewx.model.WxNewsTemplate;
 import com.coffeewx.model.vo.FansMsgVO;
 import com.coffeewx.service.WxAccountFansService;
+import com.coffeewx.service.WxAccountFansTagService;
 import com.coffeewx.service.WxAccountService;
 import com.coffeewx.service.WxNewsTemplateService;
 import com.coffeewx.wxmp.config.WxMpConfig;
@@ -43,6 +44,9 @@ public class WxAccountFansServiceImpl extends AbstractService<WxAccountFans> imp
 
     @Autowired
     private WxNewsTemplateService wxNewsTemplateService;
+
+    @Autowired
+    WxAccountFansTagService wxAccountFansTagService;
 
     @Override
     public List<WxAccountFans> findList(WxAccountFans wxAccountFans) {
@@ -84,6 +88,10 @@ public class WxAccountFansServiceImpl extends AbstractService<WxAccountFans> imp
                 wxAccountFans.setCreateTime( DateUtil.date() );
                 wxAccountFans.setUpdateTime( DateUtil.date() );
                 this.save( wxAccountFans );
+
+                //process tags
+                wxAccountFansTagService.processFansTags(wxAccount,wxmpUser);
+
             }else{//update
                 wxAccountFans.setOpenid(wxmpUser.getOpenId());
                 wxAccountFans.setSubscribeStatus(wxmpUser.getSubscribe() ? "1" : "0");
@@ -104,6 +112,10 @@ public class WxAccountFansServiceImpl extends AbstractService<WxAccountFans> imp
                 wxAccountFans.setWxAccountAppid( wxAccount.getAppid() );
                 wxAccountFans.setUpdateTime( DateUtil.date() );
                 this.update( wxAccountFans );
+
+                //process tags
+                wxAccountFansTagService.processFansTags(wxAccount,wxmpUser);
+
             }
         }
     }

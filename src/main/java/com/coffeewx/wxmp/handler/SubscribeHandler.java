@@ -6,10 +6,7 @@ import com.coffeewx.model.WxAccount;
 import com.coffeewx.model.WxAccountFans;
 import com.coffeewx.model.WxSubscribeText;
 import com.coffeewx.model.WxTextTemplate;
-import com.coffeewx.service.WxAccountFansService;
-import com.coffeewx.service.WxAccountService;
-import com.coffeewx.service.WxSubscribeTextService;
-import com.coffeewx.service.WxTextTemplateService;
+import com.coffeewx.service.*;
 import com.coffeewx.wxmp.builder.TextBuilder;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
@@ -40,6 +37,9 @@ public class SubscribeHandler extends AbstractHandler {
 
     @Autowired
     WxAccountFansService wxAccountFansService;
+
+    @Autowired
+    WxAccountFansTagService wxAccountFansTagService;
 
 
     @Override
@@ -80,6 +80,10 @@ public class SubscribeHandler extends AbstractHandler {
                         wxAccountFans.setCreateTime( DateUtil.date() );
                         wxAccountFans.setUpdateTime( DateUtil.date() );
                         wxAccountFansService.save( wxAccountFans );
+
+                        //process tags
+                        wxAccountFansTagService.processFansTags(wxAccount,wxmpUser);
+
                     }else{//update
                         wxAccountFans.setOpenid(wxmpUser.getOpenId());
                         wxAccountFans.setSubscribeStatus(wxmpUser.getSubscribe() ? "1" : "0");
@@ -100,6 +104,10 @@ public class SubscribeHandler extends AbstractHandler {
                         wxAccountFans.setWxAccountAppid( wxAccount.getAppid() );
                         wxAccountFans.setUpdateTime( DateUtil.date() );
                         wxAccountFansService.update( wxAccountFans );
+
+                        //process tags
+                        wxAccountFansTagService.processFansTags(wxAccount,wxmpUser);
+
                     }
                 }
 

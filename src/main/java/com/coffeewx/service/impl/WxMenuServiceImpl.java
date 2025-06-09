@@ -2,7 +2,6 @@ package com.coffeewx.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.coffeewx.core.AbstractService;
-import com.coffeewx.core.ResultGenerator;
 import com.coffeewx.dao.WxMenuMapper;
 import com.coffeewx.model.WxAccount;
 import com.coffeewx.model.WxMenu;
@@ -17,7 +16,6 @@ import com.coffeewx.wxmp.config.WxMpConfig;
 import com.google.common.collect.Lists;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.bean.menu.WxMenuButton;
-import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpMenuService;
 import me.chanjar.weixin.mp.api.WxMpService;
 import org.springframework.beans.factory.annotation.Autowired;
