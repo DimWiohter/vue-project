@@ -84,6 +84,20 @@ CREATE TABLE `t_wx_account_fans` (
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='微信公众号粉丝表';
 
 -- ----------------------------
+-- Table structure for `t_wx_account_fans_tag`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_wx_account_fans_tag`;
+CREATE TABLE `t_wx_account_fans_tag` (
+  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `openid` varchar(100) DEFAULT NULL COMMENT '用户标识',
+  `tag_id` varchar(32) DEFAULT NULL COMMENT '标签ID',
+  `wx_account_id` varchar(32) DEFAULT NULL COMMENT '微信账号ID',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='粉丝标签关联表';
+
+-- ----------------------------
 -- Table structure for `t_wx_fans_msg`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_wx_fans_msg`;
@@ -119,6 +133,21 @@ CREATE TABLE `t_wx_fans_msg_res` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='回复粉丝消息历史表 ';
+
+
+-- ----------------------------
+-- Table structure for `t_wx_fans_tag`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_wx_fans_tag`;
+CREATE TABLE `t_wx_fans_tag` (
+  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(32) DEFAULT NULL COMMENT '标签名称',
+  `count` int(11) DEFAULT NULL COMMENT '粉丝数量',
+  `wx_account_id` varchar(32) DEFAULT NULL COMMENT '微信账号ID',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='粉丝标签表';
 
 -- ----------------------------
 -- Table structure for `t_wx_media_upload`
