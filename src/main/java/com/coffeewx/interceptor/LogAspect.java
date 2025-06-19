@@ -2,6 +2,7 @@ package com.coffeewx.interceptor;
 
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -57,7 +58,7 @@ public class LogAspect {
         //params.put( "method", request.getMethod() ); // 获取请求的方式
         params.put( "args", joinPoint.getArgs() ); // 请求参数
         //params.put( "className", joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName() ); // 获取类名和获取类方法
-        params.put( "ip", request.getRemoteAddr() ); // 获取请求的ip地址
+        params.put( "ip", getClientIp(request) ); // 获取请求的ip地址
 
         // 输出格式化后的json字符串
         //logger.info( "params:{}", JSON.toJSONString( params ) );
@@ -108,6 +109,27 @@ public class LogAspect {
     @After("point()")
     public void doAfter() {
 //        logger.info( "doAfter" );
+    }
+
+    public String getClientIp(HttpServletRequest request) {
+        String ip = request.getHeader("x-forwarded-for");
+        logger.debug("x-forwarded-for = {}", ip);
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
+            logger.debug("Proxy-Client-IP = {}", ip);
+        }
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+            logger.debug("WL-Proxy-Client-IP = {}", ip);
+        }
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+            logger.debug("RemoteAddr-IP = {}", ip);
+        }
+        if(StringUtils.isNotBlank(ip)) {
+            ip = ip.split(",")[0];
+        }
+        return ip;
     }
 
 }

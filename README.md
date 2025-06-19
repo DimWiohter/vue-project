@@ -63,12 +63,11 @@ $ npm run build:prod
     }
     
     location ^~ /api {
-        #root   interface;#资源目录
-        #首页
-        #index  index.html index.htm;
-    
-        #请求转向load_balance_server 定义的服务器列表
         proxy_pass  http://localhost:9999/api;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header REMOTE-HOST $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         access_log /usr/local/nginx/logs/coffeewx-admin-access.log main;
         error_log /usr/local/nginx/logs/coffeewx-admin-error.log warn;
     }
