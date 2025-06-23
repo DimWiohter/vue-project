@@ -88,6 +88,13 @@ $ npm run build:prod
 4、运行项目
 ```
 
+# 常见问题
+```sh
+1、项目中使用了lombok插件，自行百度。
+2、最好用IDEA开发工具。
+
+```
+
 # 参考资料
   - [vue-element-admin](https://gitee.com/mirrors/vue-element-admin)
   - [spring-boot-api](https://github.com/lihengming/spring-boot-api-project-seed)
