@@ -2,6 +2,7 @@ package com.coffeewx.wxmp.handler;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.http.HtmlUtil;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
@@ -98,10 +99,10 @@ public class MsgHandler extends AbstractHandler {
 
                             //组装回复消息
                             String content = processContent(wxMessage);
-                            wxFansMsg.setResContent( content );
+                            content = HtmlUtil.escape( content );
+                            wxFansMsg.setResContent( content  );
 
                             wxFansMsgService.save( wxFansMsg );
-
                             return new TextBuilder().build(content, wxMessage, weixinService);
 
                         }
