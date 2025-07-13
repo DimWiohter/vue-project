@@ -26,7 +26,7 @@ http://{域名}/api/wx/portal/{appid}
 ```
 
 # 公众号配置流程
-  - 公众号配置流程：[公众号配置流程](https://www.processon.com/view/link/5c95b20ae4b02ce2e89979cb)
+  - [公众号配置流程](https://www.processon.com/view/link/5c95b20ae4b02ce2e89979cb)
 
 
 # coffeewx-web-ui 打包部署
