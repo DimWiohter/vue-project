@@ -1,11 +1,13 @@
 package com.coffeewx.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.google.common.collect.Lists;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Table(name = "sys_user")
@@ -67,5 +69,8 @@ public class User {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss",iso= DateTimeFormat.ISO.DATE_TIME)
     @Column(name = "update_time")
     private Date updateTime;
+
+    @Transient
+    private List<Role> roleList = Lists.newArrayList();
 
 }

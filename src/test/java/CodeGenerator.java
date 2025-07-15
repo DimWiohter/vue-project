@@ -40,6 +40,14 @@ public class CodeGenerator {
 
     //重要提醒，生成完代码，一定要注释掉，防止误操作，重复生成
     public static void main(String[] args) {
+//        genCodeByCustomModelName("sys_dept","Dept");
+//        genCodeByCustomModelName("sys_permission","Permission");
+//        genCodeByCustomModelName("sys_role","Role");
+//        genCodeByCustomModelName("sys_role_permission","RolePermission");
+//        genCodeByCustomModelName("sys_user_dept","UserDept");
+//        genCodeByCustomModelName("sys_user_role","UserRole");
+
+        //genCodeByCustomModelName("sys_role_wxaccount","RoleWxaccount");
 
         //genCodeByCustomModelName("t_wx_fans_tag","WxFansTag");
         //genCodeByCustomModelName("t_wx_account_fans_tag","WxAccountFansTag");

@@ -36,7 +36,8 @@ import java.util.List;
 /**
  * Spring MVC 配置
  */
-@Configuration
+@Deprecated
+//@Configuration
 public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
 
     private final Logger logger = LoggerFactory.getLogger( WebMvcConfigurer.class );

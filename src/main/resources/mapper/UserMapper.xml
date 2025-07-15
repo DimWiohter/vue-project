@@ -16,6 +16,8 @@
     <result column="flag" jdbcType="VARCHAR" property="flag" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <collection property="roleList" ofType="com.coffeewx.model.WxAccountFansTag" select="getRoleList" column="id">
+    </collection>
   </resultMap>
 
   <sql id="Base_Column_List">
@@ -35,4 +37,27 @@
       AND t.username LIKE CONCAT('%', #{username}, '%')
     </if>
   </select>
+
+  <resultMap id="RoleBaseResultMap" type="com.coffeewx.model.Role">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <select id="getRoleList" parameterType="java.lang.String" resultMap="RoleBaseResultMap">
+    SELECT
+        t2.*
+    FROM
+        sys_user_role t
+    LEFT JOIN sys_user t2 ON t.role_id = t2.id
+    WHERE
+        t.user_id = #{id}
+  </select>
+
 </mapper>
