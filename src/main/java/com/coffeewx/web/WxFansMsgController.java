@@ -4,6 +4,7 @@ import com.coffeewx.core.Result;
 import com.coffeewx.core.ResultGenerator;
 import com.coffeewx.model.WxFansMsg;
 import com.coffeewx.service.WxFansMsgService;
+import com.coffeewx.utils.UserUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,9 +53,18 @@ public class WxFansMsgController extends AbstractController{
 
     @PostMapping("/list")
     public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer limit,@RequestParam String wxAccountId) {
+
+        //注意位置，和PageHelper有关，在分页之前执行
+        String wxAccountIds = UserUtils.getWxAccountIds();
+
         PageHelper.startPage(page, limit);
         WxFansMsg wxFansMsg = new WxFansMsg();
         wxFansMsg.setWxAccountId( wxAccountId );
+
+        //权限过滤
+        wxFansMsg.setFilterRole( true );
+        wxFansMsg.setWxAccountIds( wxAccountIds );
+
         List<WxFansMsg> list = wxFansMsgService.findList( wxFansMsg );
         PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genSuccessResult(pageInfo);

@@ -12,6 +12,7 @@ import com.coffeewx.model.vo.NewsTemplateVO;
 import com.coffeewx.service.WxAccountFansService;
 import com.coffeewx.service.WxNewsArticleItemService;
 import com.coffeewx.service.WxNewsTemplateService;
+import com.coffeewx.utils.UserUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
@@ -77,10 +78,19 @@ public class WxNewsTemplateController extends AbstractController {
 
     @PostMapping("/list")
     public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer limit, @RequestParam String tplName, @RequestParam String wxAccountId) {
+
+        //注意位置，和PageHelper有关，在分页之前执行
+        String wxAccountIds = UserUtils.getWxAccountIds();
+
         PageHelper.startPage( page, limit );
         WxNewsTemplate wxNewsTemplate = new WxNewsTemplate();
         wxNewsTemplate.setTplName( tplName );
         wxNewsTemplate.setWxAccountId( wxAccountId );
+
+        //权限过滤
+        wxNewsTemplate.setFilterRole( true );
+        wxNewsTemplate.setWxAccountIds( wxAccountIds );
+
         List <WxNewsTemplate> list = wxNewsTemplateService.findList( wxNewsTemplate );
         PageInfo pageInfo = new PageInfo( list );
         return ResultGenerator.genSuccessResult( pageInfo );

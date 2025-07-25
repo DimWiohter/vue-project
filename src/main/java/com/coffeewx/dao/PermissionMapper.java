@@ -9,4 +9,8 @@ public interface PermissionMapper extends Mapper<Permission> {
 
     List<Permission> findList(Permission permission);
 
+    List<Permission> findListByRoleId(String roleId);
+
+    List<Permission> listTreePermission();
+
 }

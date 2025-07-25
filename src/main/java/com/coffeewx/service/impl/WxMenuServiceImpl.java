@@ -50,8 +50,7 @@ public class WxMenuServiceImpl extends AbstractService<WxMenu> implements WxMenu
     }
 
     @Override
-    public List<WxMenu> listTreeMenu(){
-        WxMenu wxMenu = new WxMenu();
+    public List<WxMenu> listTreeMenu(WxMenu wxMenu){
         return tWxMenuMapper.listTreeMenu(wxMenu);
     }
 

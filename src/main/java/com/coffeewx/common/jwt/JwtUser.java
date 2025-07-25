@@ -14,6 +14,8 @@ import java.util.Collection;
  */
 public class JwtUser implements UserDetails {
 
+    private String userId;
+
     private String username;
 
     private String password;
@@ -25,11 +27,16 @@ public class JwtUser implements UserDetails {
     public JwtUser() {
     }
 
-    public JwtUser(String username, String password, Integer state, Collection<? extends GrantedAuthority> authorities) {
+    public JwtUser(String userId,String username, String password, Integer state, Collection<? extends GrantedAuthority> authorities) {
+        this.userId = userId;
         this.username = username;
         this.password = password;
         this.state = state;
         this.authorities = authorities;
+    }
+
+    public String getUserId() {
+        return userId;
     }
 
     @Override

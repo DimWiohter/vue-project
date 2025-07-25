@@ -11,11 +11,76 @@
     <result column="remarks" jdbcType="VARCHAR" property="remarks" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="is_related_sys_user" jdbcType="VARCHAR" property="isRelatedSysUser"/>
+    <result column="is_related_sys_permission" jdbcType="VARCHAR" property="isRelatedSysPermission"/>
+    <result column="is_related_wxaccount" jdbcType="VARCHAR" property="isRelatedWxAccount"/>
   </resultMap>
 
   <select id="findList" parameterType="com.coffeewx.model.Role" resultMap="BaseResultMap">
-    SELECT * FROM sys_role t
-    WHERE 1=1
+    SELECT
+        t.*, (
+            CASE
+            WHEN (
+                SELECT
+                    COUNT(t2.id)
+                FROM
+                    sys_user_role t2
+                WHERE
+                    t2.role_id = t.id
+            ) THEN
+                '1'
+            ELSE
+                '0'
+            END
+        ) AS is_related_sys_user,
+        (
+            CASE
+            WHEN (
+                SELECT
+                    COUNT(t3.id)
+                FROM
+                    sys_role_permission t3
+                WHERE
+                    t3.role_id = t.id
+            ) THEN
+                '1'
+            ELSE
+                '0'
+            END
+        ) AS is_related_sys_permission,
+        (
+            CASE
+            WHEN (
+                SELECT
+                    COUNT(t4.id)
+                FROM
+                    sys_role_wxaccount t4
+                WHERE
+                    t4.role_id = t.id
+            ) THEN
+                '1'
+            ELSE
+                '0'
+            END
+        ) AS is_related_wxaccount
+    FROM
+        sys_role t
+    WHERE
+        1 = 1
+    <if test="name != null and name != ''">
+      AND t.name LIKE CONCAT('%', #{name}, '%')
+    </if>
+    ORDER BY t.update_time DESC
+  </select>
+
+  <select id="findListByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT
+        t2.*
+    FROM
+        sys_user_role t
+    LEFT JOIN sys_role t2 ON t.role_id = t2.id
+    WHERE
+        t.user_id = #{id}
   </select>
 
 </mapper>

@@ -33,6 +33,12 @@
     <if test="isUpload != null and isUpload != ''">
       AND t.is_upload = #{isUpload}
     </if>
+    <if test="filterRole == true">
+      AND t.wx_account_id in
+      <foreach item="item" index="index" collection="wxAccountIds.split(',')"  open="(" separator="," close=")">
+        '${item}'
+      </foreach>
+    </if>
     ORDER BY t.update_time DESC
   </select>
 

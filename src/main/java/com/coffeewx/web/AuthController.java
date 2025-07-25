@@ -1,17 +1,26 @@
 package com.coffeewx.web;
 
+import cn.hutool.json.JSONUtil;
 import com.coffeewx.annotation.IgnoreToken;
 import com.coffeewx.core.Result;
 import com.coffeewx.core.ResultGenerator;
 import com.coffeewx.model.vo.TokenReqVO;
-import com.coffeewx.model.vo.UserInfoVO;
 import com.coffeewx.model.vo.UserReqVO;
 import com.coffeewx.service.AuthService;
-import com.coffeewx.service.TokenService;
 import com.coffeewx.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.session.SessionInformation;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 授权模块
@@ -22,9 +31,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 @IgnoreToken
 public class AuthController extends AbstractController{
-
-    @Autowired
-    TokenService tokenService;
 
     @Autowired
     UserService userService;
@@ -41,18 +47,14 @@ public class AuthController extends AbstractController{
         return ResultGenerator.genSuccessResult( new TokenReqVO(token) );
     }
 
-    @PostMapping("/getUserInfo")
-    public Result getUserInfo(@RequestBody TokenReqVO tokenReqVO) {
-        if(StringUtils.isBlank( tokenReqVO.getToken() )){
-            return ResultGenerator.genFailResult( "参数不全" );
-        }
-        UserInfoVO userInfoVO = authService.getUserInfo( tokenReqVO.getToken() );
-        return ResultGenerator.genSuccessResult(userInfoVO);
-    }
+
 
     @PostMapping("/logout")
-    public Result logout(@RequestParam String token) {
-        tokenService.deleteToken( token );
+    public Result logout(HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null){
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
         return ResultGenerator.genSuccessResult( );
     }
 

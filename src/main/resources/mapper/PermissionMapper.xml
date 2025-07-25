@@ -10,6 +10,7 @@
     <result column="resources" jdbcType="VARCHAR" property="resources" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="level" jdbcType="INTEGER" property="level" />
+    <result column="sort_no" jdbcType="INTEGER" property="sortNo" />
     <result column="icon" jdbcType="VARCHAR" property="icon" />
     <result column="type" jdbcType="VARCHAR" property="type" />
     <result column="remarks" jdbcType="VARCHAR" property="remarks" />
@@ -18,6 +19,21 @@
   </resultMap>
 
   <select id="findList" parameterType="com.coffeewx.model.Permission" resultMap="BaseResultMap">
+    SELECT * FROM sys_permission t
+    WHERE 1=1
+  </select>
+
+  <select id="findListByRoleId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT
+    t2.*
+    FROM
+    sys_role_permission t
+    LEFT JOIN sys_permission t2 ON t.permission_id = t2.id
+    WHERE
+    t.role_id = #{id}
+  </select>
+
+  <select id="listTreePermission" parameterType="com.coffeewx.model.Permission" resultMap="BaseResultMap">
     SELECT * FROM sys_permission t
     WHERE 1=1
   </select>

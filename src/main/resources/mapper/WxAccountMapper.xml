@@ -27,6 +27,23 @@
     <if test="name != null and name != ''">
       AND t.name LIKE CONCAT('%', #{name}, '%')
     </if>
+    <if test="filterRole == true">
+      AND t.id in
+      <foreach item="item" index="index" collection="wxAccountIds.split(',')"  open="(" separator="," close=")">
+        '${item}'
+      </foreach>
+    </if>
+
+  </select>
+
+  <select id="findListByRoleId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT
+    t2.*
+    FROM
+    sys_role_wxaccount t
+    LEFT JOIN t_wx_account t2 ON t.wx_account_id = t2.id
+    WHERE
+    t.role_id = #{id}
   </select>
   
 </mapper>

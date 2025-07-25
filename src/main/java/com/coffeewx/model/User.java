@@ -70,7 +70,4 @@ public class User {
     @Column(name = "update_time")
     private Date updateTime;
 
-    @Transient
-    private List<Role> roleList = Lists.newArrayList();
-
 }

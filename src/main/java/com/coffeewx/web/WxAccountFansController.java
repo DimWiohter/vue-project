@@ -9,6 +9,7 @@ import com.coffeewx.model.WxAccountFans;
 import com.coffeewx.model.vo.FansMsgVO;
 import com.coffeewx.service.WxAccountFansService;
 import com.coffeewx.service.WxFansTagService;
+import com.coffeewx.utils.UserUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,11 +59,19 @@ public class WxAccountFansController extends AbstractController{
 
     @PostMapping("/list")
     public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer limit,@RequestParam String nicknameStr,@RequestParam String wxAccountId) {
+
+        //注意位置，和PageHelper有关，在分页之前执行
+        String wxAccountIds = UserUtils.getWxAccountIds();
+
         PageHelper.startPage(page, limit);
         PageHelper.orderBy( "subscribe_time desc" );
         WxAccountFans wxAccountFans = new WxAccountFans();
         wxAccountFans.setNicknameStr( nicknameStr );
         wxAccountFans.setWxAccountId( wxAccountId );
+        //权限过滤
+        wxAccountFans.setFilterRole( true );
+        wxAccountFans.setWxAccountIds( wxAccountIds );
+
         List<WxAccountFans> list = wxAccountFansService.findList( wxAccountFans );
         PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genSuccessResult(pageInfo);

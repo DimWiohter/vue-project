@@ -52,4 +52,10 @@ public class WxSubscribeText {
     @Transient
     private String wxAccountName;//公众号名称
 
+    //权限过滤使用
+    @Transient
+    private boolean filterRole;//不过滤权限默认false,过滤权限true
+    @Transient
+    private String wxAccountIds;//权限过滤使用
+
 }

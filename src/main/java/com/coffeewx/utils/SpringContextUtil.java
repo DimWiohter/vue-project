@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -13,6 +14,7 @@ import org.springframework.util.Assert;
  * @date 2019-01-22 19:00
  */
 @Component
+@Lazy(false)
 public class SpringContextUtil implements ApplicationContextAware {
 
     private final static Logger logger = LoggerFactory.getLogger(SpringContextUtil.class);

@@ -9,4 +9,6 @@ public interface WxAccountMapper extends Mapper<WxAccount> {
 
     List<WxAccount> findList(WxAccount wxAccount);
 
+    List<WxAccount> findListByRoleId(String userId);
+
 }

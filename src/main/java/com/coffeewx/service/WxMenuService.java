@@ -14,7 +14,7 @@ public interface WxMenuService extends Service<WxMenu> {
 
     List<WxMenu> findList(WxMenu tWxMenu);
 
-    List<WxMenu> listTreeMenu();
+    List<WxMenu> listTreeMenu(WxMenu wxMenu);
 
     List<WxMenu> listTreeMenu(String wxAccountId);
 

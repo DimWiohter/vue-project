@@ -9,4 +9,6 @@ public interface UserRoleMapper extends Mapper<UserRole> {
 
     List<UserRole> findList(UserRole userRole);
 
+    void deleteByRoleId(String roleId);
+
 }

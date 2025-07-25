@@ -17,6 +17,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsUtils;
@@ -63,13 +64,15 @@ public class WebMvcConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeRequests()
                 .antMatchers( HttpMethod.OPTIONS, "/**").permitAll()
-                .antMatchers("/api/**").permitAll()
-                .antMatchers("/api/auth/**").permitAll()
+                .antMatchers("/").permitAll()//首页放行
+                .antMatchers("/auth/**").permitAll()//放行
+                .antMatchers("/showImage").permitAll()//放行
                 .anyRequest().authenticated()
                 .and().headers().cacheControl();
-
-        httpSecurity.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
-
+        httpSecurity.exceptionHandling()
+                .authenticationEntryPoint( getMyAuthenticationEntryPoint() )
+                .accessDeniedHandler( getMyAccessDeniedHandler() )
+                .and().addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = httpSecurity.authorizeRequests();
         //让Spring security放行所有preflight request
@@ -91,6 +94,16 @@ public class WebMvcConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public MyAuthenticationEntryPoint getMyAuthenticationEntryPoint() {
+        return new MyAuthenticationEntryPoint();
+    }
+
+    @Bean
+    public MyAccessDeniedHandler getMyAccessDeniedHandler() {
+        return new MyAccessDeniedHandler();
     }
 
 }

@@ -10,4 +10,6 @@ public interface RoleWxaccountMapper extends Mapper<RoleWxaccount> {
 
     List<RoleWxaccount> findList(RoleWxaccount roleWxaccount);
 
+    void deleteByRoleId(String roleId);
+
 }

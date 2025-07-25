@@ -5,6 +5,7 @@ import com.coffeewx.core.Result;
 import com.coffeewx.core.ResultGenerator;
 import com.coffeewx.model.WxReceiveText;
 import com.coffeewx.service.WxReceiveTextService;
+import com.coffeewx.utils.UserUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,10 +59,19 @@ public class WxReceiveTextController {
 
     @PostMapping("/list")
     public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer limit,@RequestParam String receiveText,@RequestParam String wxAccountId) {
+
+        //注意位置，和PageHelper有关，在分页之前执行
+        String wxAccountIds = UserUtils.getWxAccountIds();
+
         PageHelper.startPage(page, limit);
         WxReceiveText wxReceiveText = new WxReceiveText();
         wxReceiveText.setReceiveText( receiveText );
         wxReceiveText.setWxAccountId( wxAccountId );
+
+        //权限过滤
+        wxReceiveText.setFilterRole( true );
+        wxReceiveText.setWxAccountIds( wxAccountIds );
+
         List<WxReceiveText> list = wxReceiveTextService.findList( wxReceiveText );
         PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genSuccessResult(pageInfo);

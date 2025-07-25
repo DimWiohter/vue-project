@@ -17,7 +17,8 @@ import java.util.concurrent.TimeUnit;
  * @author Kevin
  * @date 2018-12-11 17:41
  */
-@Service
+//@Service
+@Deprecated
 public class TokenServiceImpl implements TokenService{
 
     @Autowired

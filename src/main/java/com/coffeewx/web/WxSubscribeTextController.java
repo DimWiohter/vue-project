@@ -5,6 +5,7 @@ import com.coffeewx.core.Result;
 import com.coffeewx.core.ResultGenerator;
 import com.coffeewx.model.WxSubscribeText;
 import com.coffeewx.service.WxSubscribeTextService;
+import com.coffeewx.utils.UserUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,8 +58,17 @@ public class WxSubscribeTextController {
 
     @PostMapping("/list")
     public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer limit) {
+
+        //注意位置，和PageHelper有关，在分页之前执行
+        String wxAccountIds = UserUtils.getWxAccountIds();
+
         PageHelper.startPage(page, limit);
         WxSubscribeText wxSubscribeText = new WxSubscribeText();
+
+        //权限过滤
+        wxSubscribeText.setFilterRole( true );
+        wxSubscribeText.setWxAccountIds( wxAccountIds );
+
         List<WxSubscribeText> list = wxSubscribeTextService.findList( wxSubscribeText );
         PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genSuccessResult(pageInfo);

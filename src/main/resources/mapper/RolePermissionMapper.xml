@@ -15,6 +15,14 @@
   <select id="findList" parameterType="com.coffeewx.model.RolePermission" resultMap="BaseResultMap">
     SELECT * FROM sys_role_permission t
     WHERE 1=1
+    <if test="roleId != null and roleId != ''">
+      AND t.role_id = #{roleId}
+    </if>
   </select>
+
+  <delete id="deleteByRoleId" parameterType="java.lang.String">
+    delete from sys_role_permission
+    where role_id = #{roleId,jdbcType=VARCHAR}
+  </delete>
 
 </mapper>

@@ -21,10 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 public class GlobalExceptionController extends AbstractController{
 
 
-    /**
-     * 400 - Bad Request
-     */
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public Result handleHttpMessageNotReadableException(
             HttpMessageNotReadableException e) {
@@ -35,17 +31,15 @@ public class GlobalExceptionController extends AbstractController{
     /**
      * 认证错误
      */
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(AuthenticationException.class)
     public Result handleAuthenticationException(AuthenticationException e) {
         logger.error(e.getMessage());
-        return new Result(ResultCode.UNAUTHORIZED );
+        return new Result( ResultCode.USER_UNAUTHORIZED );
     }
 
     /**
      * 400 - Bad Request
      */
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({MethodArgumentNotValidException.class})
     public Result handleValidationException(MethodArgumentNotValidException e) {
         logger.error(e.getMessage());
@@ -56,7 +50,6 @@ public class GlobalExceptionController extends AbstractController{
      * 405 - Method Not Allowed。HttpRequestMethodNotSupportedException
      * 是ServletException的子类,需要Servlet API支持
      */
-    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public Result handleHttpRequestMethodNotSupportedException(
             HttpRequestMethodNotSupportedException e) {
@@ -68,7 +61,6 @@ public class GlobalExceptionController extends AbstractController{
      * 415 - Unsupported Media Type。HttpMediaTypeNotSupportedException
      * 是ServletException的子类,需要Servlet API支持
      */
-    @ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
     @ExceptionHandler({HttpMediaTypeNotSupportedException.class})
     public Result handleHttpMediaTypeNotSupportedException(Exception e) {
         logger.error(e.getMessage());
@@ -77,7 +69,6 @@ public class GlobalExceptionController extends AbstractController{
 
     // 捕捉其他所有异常
     @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Result<String> globalException(HttpServletRequest request, Exception e) {
         return ResultGenerator.genFailResult( e.getMessage());
     }

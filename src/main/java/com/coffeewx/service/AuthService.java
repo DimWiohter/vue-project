@@ -1,6 +1,5 @@
 package com.coffeewx.service;
 
-import com.coffeewx.model.vo.UserInfoVO;
 import com.coffeewx.model.vo.UserReqVO;
 
 /**
@@ -18,12 +17,5 @@ public interface AuthService {
      * @date 2019-01-14 15:48:31
      */
     String login(UserReqVO userReqVO);
-
-    /**
-     * 根据token获取用户信息
-     * @param token
-     * @return
-     */
-    UserInfoVO getUserInfo(String token);
 
 }

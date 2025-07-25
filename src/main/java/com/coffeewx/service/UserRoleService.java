@@ -1,6 +1,8 @@
 package com.coffeewx.service;
-import com.coffeewx.model.UserRole;
+
 import com.coffeewx.core.Service;
+import com.coffeewx.model.UserRole;
+
 import java.util.List;
 
 /**

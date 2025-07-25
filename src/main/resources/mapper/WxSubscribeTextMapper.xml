@@ -28,6 +28,12 @@
     <if test="wxAccountId != null and wxAccountId != ''">
       AND t.wx_account_id = #{wxAccountId}
     </if>
+    <if test="filterRole == true">
+      AND t.wx_account_id in
+      <foreach item="item" index="index" collection="wxAccountIds.split(',')"  open="(" separator="," close=")">
+        '${item}'
+      </foreach>
+    </if>
   </select>
 
 </mapper>

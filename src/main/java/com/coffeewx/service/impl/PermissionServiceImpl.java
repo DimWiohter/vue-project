@@ -24,4 +24,9 @@ public class PermissionServiceImpl extends AbstractService<Permission> implement
         return sysPermissionMapper.findList(sysPermission);
     }
 
+    @Override
+    public List <Permission> listTreePermission() {
+        return sysPermissionMapper.listTreePermission();
+    }
+
 }

@@ -16,19 +16,11 @@
     <result column="flag" jdbcType="VARCHAR" property="flag" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <collection property="roleList" ofType="com.coffeewx.model.WxAccountFansTag" select="getRoleList" column="id">
-    </collection>
   </resultMap>
 
   <sql id="Base_Column_List">
     id, username, pwd, nick_name, sex, phone, email, avatar, flag, create_time, update_time
   </sql>
-  <select id="getUserByUserName" parameterType="com.coffeewx.model.User" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from sys_user
-    where username = #{username,jdbcType=VARCHAR}
-  </select>
 
   <select id="findList" parameterType="com.coffeewx.model.User" resultMap="BaseResultMap">
     SELECT * FROM sys_user t
@@ -36,28 +28,6 @@
     <if test="username != null and username != ''">
       AND t.username LIKE CONCAT('%', #{username}, '%')
     </if>
-  </select>
-
-  <resultMap id="RoleBaseResultMap" type="com.coffeewx.model.Role">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="code" jdbcType="VARCHAR" property="code" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-  </resultMap>
-
-  <select id="getRoleList" parameterType="java.lang.String" resultMap="RoleBaseResultMap">
-    SELECT
-        t2.*
-    FROM
-        sys_user_role t
-    LEFT JOIN sys_user t2 ON t.role_id = t2.id
-    WHERE
-        t.user_id = #{id}
   </select>
 
 </mapper>

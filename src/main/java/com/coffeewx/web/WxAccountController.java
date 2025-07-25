@@ -1,14 +1,25 @@
 package com.coffeewx.web;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateUtil;
+import com.alibaba.fastjson.JSONObject;
+import com.coffeewx.common.jwt.JwtUser;
 import com.coffeewx.core.Result;
 import com.coffeewx.core.ResultGenerator;
 import com.coffeewx.model.*;
+import com.coffeewx.model.vo.UserTreeNode;
+import com.coffeewx.model.vo.WxAccountTreeNode;
 import com.coffeewx.service.*;
+import com.coffeewx.utils.UserUtils;
 import com.coffeewx.wxmp.config.WxConfig;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -58,9 +69,18 @@ public class WxAccountController extends AbstractController{
 
     @PostMapping("/list")
     public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer limit,@RequestParam String name) {
+
+        //注意位置，和PageHelper有关，在分页之前执行
+        String wxAccountIds = UserUtils.getWxAccountIds();
+
         PageHelper.startPage(page, limit);
         WxAccount wxAccount = new WxAccount();
         wxAccount.setName( name );
+
+        //权限过滤
+        wxAccount.setFilterRole( true );
+        wxAccount.setWxAccountIds( wxAccountIds );
+
         List<WxAccount> list = wxAccountService.findList(wxAccount);
         PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genSuccessResult(pageInfo);
@@ -68,7 +88,13 @@ public class WxAccountController extends AbstractController{
 
     @PostMapping("/listAll")
     public Result listAll() {
-        List<WxAccount> list = wxAccountService.findAll();
+        //注意位置，和PageHelper有关，在分页之前执行
+        String wxAccountIds = UserUtils.getWxAccountIds();
+        WxAccount wxAccount = new WxAccount();
+        //权限过滤
+        wxAccount.setFilterRole( true );
+        wxAccount.setWxAccountIds( wxAccountIds );
+        List<WxAccount> list = wxAccountService.findList(wxAccount);
         return ResultGenerator.genSuccessResult(list);
     }
 
@@ -76,6 +102,22 @@ public class WxAccountController extends AbstractController{
     public Result generateQRUrl(@RequestBody WxAccount wxAccount) throws Exception{
         wxAccountService.generateQRUrl(wxAccount);
         return ResultGenerator.genSuccessResult();
+    }
+
+    @PostMapping("/listTreeWxAccount")
+    public Result listTreeWxAccount() {
+        WxAccount wxAccount = new WxAccount();
+        List<WxAccount> list = wxAccountService.findList(wxAccount);
+        List<WxAccountTreeNode> wxAccountTreeNodeList = Lists.newArrayList();
+        list.forEach( temp -> {
+            WxAccountTreeNode wxAccountTreeNode = new WxAccountTreeNode();
+            BeanUtil.copyProperties( temp,wxAccountTreeNode );
+            wxAccountTreeNodeList.add( wxAccountTreeNode );
+        } );
+        JSONObject json = new JSONObject(  );
+        json.put( "wxAccountList", list);
+        json.put( "wxAccountTree", wxAccountTreeNodeList);
+        return ResultGenerator.genSuccessResult(json);
     }
 
 }

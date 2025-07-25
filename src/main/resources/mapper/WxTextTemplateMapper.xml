@@ -14,6 +14,7 @@
         <result column="is_related_subscribe_text" jdbcType="VARCHAR" property="isRelatedSubscribeText"/>
         <result column="is_related_receive_text" jdbcType="VARCHAR" property="isRelatedReceiveText"/>
         <result column="is_related_menu" jdbcType="VARCHAR" property="isRelatedMenu"/>
+
     </resultMap>
 
     <select id="findList" parameterType="com.coffeewx.model.WxTextTemplate" resultMap="BaseResultMap">
@@ -65,7 +66,8 @@
         ) AS is_related_menu
         FROM
         t_wx_text_template t
-        WHERE 1=1
+        WHERE
+        1 = 1
         <if test="tplName != null and tplName != ''">
             AND t.tpl_name LIKE CONCAT('%', #{tplName}, '%')
         </if>

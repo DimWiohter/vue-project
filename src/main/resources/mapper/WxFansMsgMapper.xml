@@ -36,6 +36,12 @@
     <if test="nicknameStr != null and nicknameStr != ''">
       AND t.nickname LIKE CONCAT('%', #{nicknameStr}, '%')
     </if>
+    <if test="filterRole == true">
+      AND t.wx_account_id in
+      <foreach item="item" index="index" collection="wxAccountIds.split(',')"  open="(" separator="," close=")">
+        '${item}'
+      </foreach>
+    </if>
     ORDER BY t.create_time DESC
   </select>
 

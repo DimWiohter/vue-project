@@ -13,6 +13,7 @@ import com.coffeewx.service.WxAccountService;
 import com.coffeewx.service.WxMenuService;
 import com.coffeewx.service.WxNewsTemplateService;
 import com.coffeewx.service.WxTextTemplateService;
+import com.coffeewx.utils.UserUtils;
 import com.coffeewx.wxmp.config.WxMpConfig;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -81,9 +82,18 @@ public class WxMenuController {
 
     @PostMapping("/listTreeMenu")
     public Result listTreeMenu() {
-        List<WxMenu> list = wxMenuService.listTreeMenu();
+        WxMenu wxMenu = new WxMenu();
+        String wxAccountIds = UserUtils.getWxAccountIds();
+        //权限过滤
+        wxMenu.setFilterRole( true );
+        wxMenu.setWxAccountIds( wxAccountIds );
+
+        List<WxMenu> list = wxMenuService.listTreeMenu(wxMenu);
         List<MenuTreeNode> menuTreeNodeList = wxMenuService.convertTreeMenu( list );
-        return ResultGenerator.genSuccessResult(menuTreeNodeList);
+        JSONObject json = new JSONObject(  );
+        json.put( "menuList", list);
+        json.put( "menuTree", menuTreeNodeList);
+        return ResultGenerator.genSuccessResult(json);
     }
 
     @PostMapping("/validateData")

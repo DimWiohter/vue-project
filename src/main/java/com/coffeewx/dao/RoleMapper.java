@@ -9,4 +9,6 @@ public interface RoleMapper extends Mapper<Role> {
 
     List<Role> findList(Role role);
 
+    List<Role> findListByUserId(String userId);
+
 }

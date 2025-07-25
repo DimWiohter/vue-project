@@ -1,4 +1,4 @@
-package com.coffeewx.configurer;
+package com.coffeewx.core.redis;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

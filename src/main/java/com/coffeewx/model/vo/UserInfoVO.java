@@ -1,9 +1,10 @@
 package com.coffeewx.model.vo;
 
+import com.google.common.collect.Sets;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 /**
  * 用户信息
@@ -12,9 +13,45 @@ import java.util.List;
  */
 @Data
 public class UserInfoVO implements Serializable {
-    private String token;
-    private String introduction;
+
+    private Integer id;
+
+    /**
+     * 账号
+     */
+    private String username;
+
+    private String nickName;
+
+    /**
+     * 性别：0是男 1是女
+     */
+    private String sex;
+
+    /**
+     * 手机号码
+     */
+    private String phone;
+
+    /**
+     * 邮箱
+     */
+    private String email;
+
+    /**
+     * 头像
+     */
     private String avatar;
-    private String name;
-    private List<String> roles;
+
+    /**
+     * 状态
+     */
+    private String flag;
+
+    private Set<String> roles = Sets.newHashSet();
+
+    private Set<MenuVO> menus = Sets.newHashSet();
+
+    private Set<ButtonVO> buttons = Sets.newHashSet();
+
 }

@@ -63,4 +63,13 @@ public class WxAccount {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss",iso= DateTimeFormat.ISO.DATE_TIME)
     @Column(name = "update_time")
     private Date updateTime;
+
+    //扩展字段
+
+    //权限过滤使用
+    @Transient
+    private boolean filterRole;//不过滤权限默认false,过滤权限true
+    @Transient
+    private String wxAccountIds;//权限过滤使用
+
 }

@@ -1,6 +1,9 @@
 package com.coffeewx.service;
-import com.coffeewx.model.Permission;
+
 import com.coffeewx.core.Service;
+import com.coffeewx.model.Permission;
+import com.coffeewx.model.WxMenu;
+
 import java.util.List;
 
 /**
@@ -9,5 +12,7 @@ import java.util.List;
 public interface PermissionService extends Service<Permission> {
 
     List<Permission> findList(Permission sysPermission);
+
+    List<Permission> listTreePermission();
 
 }

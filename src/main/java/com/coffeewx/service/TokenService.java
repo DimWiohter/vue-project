@@ -5,6 +5,7 @@ package com.coffeewx.service;
  * @author Kevin
  * @date 2018-12-11 17:28
  */
+@Deprecated
 public interface TokenService {
 
     /**
