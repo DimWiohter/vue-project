@@ -6,12 +6,13 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Data
 @Table(name = "sys_user")
-public class User {
+public class User implements Serializable{
     /**
      * 主键
      */

@@ -10,7 +10,6 @@ import cn.hutool.crypto.SecureUtil;
 public class TestData2 {
 
     public static void main(String[] args) {
-        System.out.println( SecureUtil.md5( "123456" ));
     }
 
 }

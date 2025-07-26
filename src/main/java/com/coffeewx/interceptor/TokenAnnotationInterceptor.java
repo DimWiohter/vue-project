@@ -5,7 +5,7 @@ import com.coffeewx.annotation.IgnoreToken;
 import com.coffeewx.core.Result;
 import com.coffeewx.core.ResultCode;
 import com.coffeewx.core.ServiceException;
-import com.coffeewx.core.redis.CacheService;
+import com.coffeewx.model.User;
 import com.coffeewx.service.TokenService;
 import com.coffeewx.utils.BaseContextHandler;
 import org.slf4j.Logger;
@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -23,9 +22,6 @@ import java.lang.reflect.Method;
 public class TokenAnnotationInterceptor extends HandlerInterceptorAdapter {
 
     private final Logger logger = LoggerFactory.getLogger( TokenAnnotationInterceptor.class );
-
-    @Resource
-    private CacheService cacheService;
 
     @Autowired
     TokenService tokenService;
@@ -50,8 +46,9 @@ public class TokenAnnotationInterceptor extends HandlerInterceptorAdapter {
                     return false;
                 }
 
-                String userId = tokenService.getUserIdByToken( token );
-                BaseContextHandler.setUserID( userId );
+                User user = tokenService.getUserByToken( token );
+                BaseContextHandler.setUserID( String.valueOf( user.getId() ) );
+                BaseContextHandler.setUsername( user.getUsername() );
                 logger.debug( "token: " + token );
             } catch (Exception e) {
                 logger.error( "拦截出错！", e );

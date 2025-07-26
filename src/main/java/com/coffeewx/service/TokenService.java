@@ -1,11 +1,12 @@
 package com.coffeewx.service;
 
+import com.coffeewx.model.User;
+
 /**
  *  Token接口类
  * @author Kevin
  * @date 2018-12-11 17:28
  */
-@Deprecated
 public interface TokenService {
 
     /**
@@ -15,7 +16,7 @@ public interface TokenService {
      * @author Kevin
      * @date 2018-12-11 17:39:13
      */
-    String createToken(String userId);
+    String createToken(User user);
 
     /**
      * 检查token是否有效
@@ -42,6 +43,6 @@ public interface TokenService {
      * @author Kevin
      * @date 2019-01-14 15:55:15
      */
-    String getUserIdByToken(String token);
+    User getUserByToken(String token);
 
 }

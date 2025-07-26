@@ -1,26 +1,22 @@
 package com.coffeewx.web;
 
-import cn.hutool.json.JSONUtil;
 import com.coffeewx.annotation.IgnoreToken;
 import com.coffeewx.core.Result;
 import com.coffeewx.core.ResultGenerator;
 import com.coffeewx.model.vo.TokenReqVO;
 import com.coffeewx.model.vo.UserReqVO;
 import com.coffeewx.service.AuthService;
-import com.coffeewx.service.UserService;
+import com.coffeewx.service.TokenService;
+import com.coffeewx.utils.BaseContextHandler;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.session.SessionInformation;
-import org.springframework.security.core.session.SessionRegistry;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  * 授权模块
@@ -33,10 +29,10 @@ import java.util.List;
 public class AuthController extends AbstractController{
 
     @Autowired
-    UserService userService;
+    AuthService authService;
 
     @Autowired
-    AuthService authService;
+    TokenService tokenService;
 
     @PostMapping("/login")
     public Result login(@RequestBody UserReqVO userReqVO) {
@@ -51,10 +47,7 @@ public class AuthController extends AbstractController{
 
     @PostMapping("/logout")
     public Result logout(HttpServletRequest request, HttpServletResponse response) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null){
-            new SecurityContextLogoutHandler().logout(request, response, auth);
-        }
+        tokenService.deleteToken( BaseContextHandler.getToken() );
         return ResultGenerator.genSuccessResult( );
     }
 

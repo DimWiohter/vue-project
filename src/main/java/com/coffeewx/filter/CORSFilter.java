@@ -10,8 +10,7 @@ import java.io.IOException;
 /**
  * 跨域过滤器
  */
-@Deprecated
-//@Component
+@Component
 public class CORSFilter implements Filter {
 
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
