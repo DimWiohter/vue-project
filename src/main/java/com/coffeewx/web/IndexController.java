@@ -1,5 +1,6 @@
 package com.coffeewx.web;
 
+import com.coffeewx.annotation.IgnoreToken;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +17,7 @@ import java.io.IOException;
  * @date 2019-03-27 16:42
  */
 @RestController
+@IgnoreToken
 public class IndexController extends AbstractController {
 
     @Value("${spring.application.name}")

@@ -13,11 +13,13 @@ CoffeeWx是一款基于VUE、Spring Boot的前后端分离的微信公众号管�
 
 # 项目演示地址
   - 项目演示地址：[coffeewx-web-ui](http://www.whjdz2012.cn/coffeewx-web-ui)
+```sh
+   演示账号:test/test123456
+   管理员账号:admin/admin123456【自觉点，莫要乱操作】
+```
 
-# 前后端项目地址
-  - 前端地址：[coffeewx-web-ui](https://gitee.com/skysong/coffeewx-web-ui)
-  - 后端地址：[coffeewx-admin-api](https://gitee.com/skysong/coffeewx-admin-api)
-
+# 公众号配置流程
+  - [公众号配置流程](https://www.processon.com/view/link/5c95b20ae4b02ce2e89979cb)
 
 # 公众号url配置表达式
 ```sh
@@ -25,9 +27,9 @@ http://{域名}/api/wx/portal/{appid}
 例子：http://coffee-ease.natapp1.cc/api/wx/portal/wxff7bf2c34c65e260
 ```
 
-# 公众号配置流程
-  - [公众号配置流程](https://www.processon.com/view/link/5c95b20ae4b02ce2e89979cb)
-
+# 前后端项目地址
+  - 前端地址：[coffeewx-web-ui](https://gitee.com/skysong/coffeewx-web-ui)
+  - 后端地址：[coffeewx-admin-api](https://gitee.com/skysong/coffeewx-admin-api)
 
 # coffeewx-web-ui 打包部署
 ```sh
