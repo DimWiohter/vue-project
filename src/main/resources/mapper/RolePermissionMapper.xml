@@ -18,6 +18,9 @@
     <if test="roleId != null and roleId != ''">
       AND t.role_id = #{roleId}
     </if>
+    <if test="permissionId != null and permissionId != ''">
+      AND t.permission_id = #{permissionId}
+    </if>
   </select>
 
   <delete id="deleteByRoleId" parameterType="java.lang.String">

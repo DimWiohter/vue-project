@@ -46,8 +46,8 @@ public class PermissionController extends AbstractController{
     }
 
     @PostMapping("/delete")
-    public Result delete(@RequestParam Integer id) {
-        permissionService.deleteById(id);
+    public Result delete(@RequestParam Integer id) throws Exception{
+        permissionService.deleteRelation(String.valueOf( id ));
         return ResultGenerator.genSuccessResult();
     }
 

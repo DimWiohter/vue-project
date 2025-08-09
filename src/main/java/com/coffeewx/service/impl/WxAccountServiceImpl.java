@@ -55,6 +55,9 @@ public class WxAccountServiceImpl extends AbstractService<WxAccount> implements 
     @Autowired
     WxAccountFansTagService wxAccountFansTagService;
 
+    @Autowired
+    RoleWxaccountService roleWxaccountService;
+
     @Override
     public List<WxAccount> findList(WxAccount wxAccount) {
         return tWxAccountMapper.findList( wxAccount );
@@ -151,6 +154,15 @@ public class WxAccountServiceImpl extends AbstractService<WxAccount> implements 
             } );
             wxNewsTemplateService.deleteById( temp.getId() );
         } );
+
+        //解除关联的角色
+        RoleWxaccount roleWxaccount = new RoleWxaccount();
+        roleWxaccount.setWxAccountId( wxAccountId );
+        List<RoleWxaccount> roleWxaccountList = roleWxaccountService.findList( roleWxaccount );
+        roleWxaccountList.forEach( temp ->{
+            roleWxaccountService.deleteById( temp.getId() );
+        } );
+
 
         //删除账户
         this.deleteById(Integer.valueOf( wxAccountId ));

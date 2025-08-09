@@ -15,4 +15,6 @@ public interface PermissionService extends Service<Permission> {
 
     List<Permission> listTreePermission();
 
+    void deleteRelation(String sysPermissionId) throws Exception;
+
 }

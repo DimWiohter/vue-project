@@ -45,8 +45,8 @@ public class UserController {
     }
 
     @PostMapping("/delete")
-    public Result delete(@RequestParam Integer id) {
-        userService.deleteById(id);
+    public Result delete(@RequestParam Integer id) throws Exception{
+        userService.deleteRelation(String.valueOf( id ));
         return ResultGenerator.genSuccessResult();
     }
 

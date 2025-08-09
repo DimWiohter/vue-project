@@ -9,9 +9,11 @@ import com.coffeewx.dao.UserMapper;
 import com.coffeewx.model.Permission;
 import com.coffeewx.model.Role;
 import com.coffeewx.model.User;
+import com.coffeewx.model.UserRole;
 import com.coffeewx.model.vo.ButtonVO;
 import com.coffeewx.model.vo.MenuVO;
 import com.coffeewx.model.vo.UserInfoVO;
+import com.coffeewx.service.UserRoleService;
 import com.coffeewx.service.UserService;
 import com.coffeewx.utils.TreeBuilder;
 import com.google.common.collect.Sets;
@@ -38,6 +40,9 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 
     @Autowired
     private PermissionMapper permissionMapper;
+
+    @Autowired
+    private UserRoleService userRoleService;
 
     @Override
     public List<User> findList(User user) {
@@ -90,6 +95,20 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         userInfoVO.getButtons().addAll( buttonVOS );
         userInfoVO.getMenus().addAll( TreeBuilder.buildTree(menuVOS) );
         return userInfoVO;
+    }
+
+    @Override
+    public void deleteRelation(String userId) throws Exception {
+        //解除与角色的关联
+        UserRole userRole = new UserRole();
+        userRole.setUserId( userId );
+        List<UserRole> userRoleList = userRoleService.findList( userRole );
+        if(userRoleList != null && userRoleList.size() > 0){
+            userRoleList.forEach( temp -> {
+                userRoleService.deleteById( temp.getId() );
+            } );
+        }
+        this.deleteById( Integer.valueOf( userId ) );
     }
 
 }

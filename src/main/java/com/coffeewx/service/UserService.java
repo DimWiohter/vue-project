@@ -21,4 +21,6 @@ public interface UserService extends Service<User> {
      */
     UserInfoVO getUserInfo(String username);
 
+    void deleteRelation(String userId) throws Exception;
+
 }
