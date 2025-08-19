@@ -2,11 +2,15 @@ package com.coffeewx.web;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateUtil;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.coffeewx.core.Result;
 import com.coffeewx.core.ResultGenerator;
+import com.coffeewx.model.Role;
+import com.coffeewx.model.RoleWxaccount;
 import com.coffeewx.model.WxAccount;
 import com.coffeewx.model.vo.WxAccountTreeNode;
+import com.coffeewx.service.RoleWxaccountService;
 import com.coffeewx.service.WxAccountService;
 import com.coffeewx.utils.UserUtils;
 import com.coffeewx.wxmp.config.WxConfig;
@@ -29,13 +33,14 @@ public class WxAccountController extends AbstractController{
     private WxAccountService wxAccountService;
 
     @Autowired
+    private RoleWxaccountService roleWxaccountService;
+
+    @Autowired
     WxConfig wxConfig;
 
     @PostMapping("/add")
-    public Result add(@RequestBody WxAccount wxAccount) {
-        wxAccount.setCreateTime( DateUtil.date() );
-        wxAccount.setUpdateTime( DateUtil.date() );
-        wxAccountService.save(wxAccount);
+    public Result add(@RequestBody WxAccount wxAccount) throws Exception{
+        wxAccountService.add( wxAccount );
         wxConfig.initWxConfig();
         return ResultGenerator.genSuccessResult();
     }

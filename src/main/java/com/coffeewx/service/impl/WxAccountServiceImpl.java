@@ -1,10 +1,12 @@
 package com.coffeewx.service.impl;
 
 import cn.hutool.core.date.DateUtil;
+import com.alibaba.fastjson.JSON;
 import com.coffeewx.core.AbstractService;
 import com.coffeewx.dao.WxAccountMapper;
 import com.coffeewx.model.*;
 import com.coffeewx.service.*;
+import com.coffeewx.utils.UserUtils;
 import com.coffeewx.wxmp.config.WxMpConfig;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpQrCodeTicket;
@@ -167,4 +169,30 @@ public class WxAccountServiceImpl extends AbstractService<WxAccount> implements 
         //删除账户
         this.deleteById(Integer.valueOf( wxAccountId ));
     }
+
+    @Override
+    public void add(WxAccount wxAccount) throws Exception{
+        wxAccount.setCreateTime( DateUtil.date() );
+        wxAccount.setUpdateTime( DateUtil.date() );
+        tWxAccountMapper.insertSelective( wxAccount );
+        logger.info( "wxAccount : {}" , JSON.toJSONString(wxAccount));
+
+        List<Role> roleList = UserUtils.getRoleList();
+
+        //添加完账号，默认授权给当前登陆用户的角色
+        if(wxAccount.getId() != null){
+            if(roleList != null && roleList.size() > 0){
+                roleList.forEach( temp -> {
+                    RoleWxaccount roleWxaccount = new RoleWxaccount();
+                    roleWxaccount.setWxAccountId( String.valueOf( wxAccount.getId() ) );
+                    roleWxaccount.setRoleId( String.valueOf( temp.getId() ) );
+                    roleWxaccount.setCreateTime( DateUtil.date() );
+                    roleWxaccount.setUpdateTime( DateUtil.date() );
+                    roleWxaccountService.save( roleWxaccount );
+                } );
+            }
+
+        }
+    }
+
 }

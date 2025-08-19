@@ -18,6 +18,9 @@
     <if test="roleId != null and roleId != ''">
       AND t.role_id = #{roleId}
     </if>
+    <if test="wxAccountId != null and wxAccountId != ''">
+      AND t.wx_account_id = #{wxAccountId}
+    </if>
   </select>
 
   <delete id="deleteByRoleId" parameterType="java.lang.String">

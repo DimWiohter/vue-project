@@ -17,4 +17,6 @@ public interface WxAccountService extends Service<WxAccount> {
 
     void deleteRelation(String wxAccountId) throws Exception;
 
+    void add(WxAccount wxAccount) throws Exception;
+
 }
