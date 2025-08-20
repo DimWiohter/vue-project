@@ -1,7 +1,11 @@
 package com.coffeewx.web;
 
 import com.coffeewx.annotation.IgnoreToken;
+import com.coffeewx.core.Result;
+import com.coffeewx.core.ResultGenerator;
+import com.coffeewx.model.vo.Server;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,5 +41,15 @@ public class IndexController extends AbstractController {
         response.getWriter().write( builder.toString() );
     }
 
+    @RequestMapping(value = "/monitor/server", method = RequestMethod.GET)
+    public Result server() throws Exception {
+        Server server = new Server();
+        try {
+            server.copyTo();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return ResultGenerator.genSuccessResult( server );
+    }
 
 }
