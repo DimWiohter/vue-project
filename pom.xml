@@ -17,12 +17,13 @@
         <!--本地包的引入-->
         <java.lib>${project.basedir}/lib</java.lib>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring.boot.version>1.5.13.RELEASE</spring.boot.version>
 
         <commons-lang3.version>3.6</commons-lang3.version>
         <guava.version>23.0</guava.version>
         <mybatis-spring.version>1.3.1</mybatis-spring.version>
-        <oshi.version>3.9.1</oshi.version>
+        <oshi.version>3.13.0</oshi.version>
+        <jna.version>5.2.0</jna.version>
+        <jna-platform.version>5.2.0</jna-platform.version>
         <easy-okhttp.version>1.1.0</easy-okhttp.version>
         <lombok.version>1.16.10</lombok.version>
         <hutool.version>4.5.1</hutool.version>
@@ -35,7 +36,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>${spring.boot.version}</version>
+        <version>1.5.13.RELEASE</version>
     </parent>
 
     <dependencies>
@@ -186,16 +187,18 @@
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna</artifactId>
+            <version>${jna.version}</version>
         </dependency>
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna-platform</artifactId>
+            <version>${jna-platform.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.github.oshi</groupId>
             <artifactId>oshi-core</artifactId>
-            <version>3.9.1</version>
+            <version>${oshi.version}</version>
         </dependency>
     </dependencies>
 

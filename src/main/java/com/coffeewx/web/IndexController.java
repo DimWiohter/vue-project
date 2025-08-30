@@ -21,13 +21,13 @@ import java.io.IOException;
  * @date 2019-03-27 16:42
  */
 @RestController
-@IgnoreToken
 public class IndexController extends AbstractController {
 
     @Value("${spring.application.name}")
     private String applicationName;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
+    @IgnoreToken
     public void index(HttpServletRequest request, HttpServletResponse response) throws IOException {
         StringBuilder builder = new StringBuilder();
         builder.append( "<html>" )
@@ -44,11 +44,7 @@ public class IndexController extends AbstractController {
     @RequestMapping(value = "/monitor/server", method = RequestMethod.GET)
     public Result server() throws Exception {
         Server server = new Server();
-        try {
-            server.copyTo();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        server.copyTo();
         return ResultGenerator.genSuccessResult( server );
     }
 
